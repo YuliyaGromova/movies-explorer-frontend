@@ -1,0 +1,24 @@
+import React from "react";
+
+
+function NavTab(props) {
+
+    return(
+        <nav className="promo__nav">
+            <ul className="promo__nav-menu">
+                <li className="promo__menu-list">
+                    <a className="promo__button link" href='#project'>О проекте</a>    
+                </li>
+                <li className="promo__menu-list">
+                    <a className="promo__button link" href='#techs'>Технологии</a>
+                </li>
+                <li className="promo__menu-list">
+                    <a className="promo__button link" href='#me'>Студент</a> 
+                </li>
+                    
+            </ul>
+        </nav>
+    )
+}
+
+export default NavTab;

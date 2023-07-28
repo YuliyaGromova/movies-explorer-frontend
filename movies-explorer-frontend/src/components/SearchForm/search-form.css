@@ -1,0 +1,113 @@
+.search-form {
+  margin: 0 auto;
+  padding: 70px 0;
+  max-width: 1140px;
+  width: 95%;
+  border-bottom: 1px solid #424242;
+}
+
+.search-form__container {
+  margin: 0 auto;
+  max-width: 1140px;
+  width: 100%;
+  display: flex;
+  border-radius: 9px;
+  background-color: #222;
+  box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
+}
+
+.search-form__icon-search {
+  margin: 19px;
+  margin-right: 10px;
+  padding: 0;
+}
+
+.search-form__input {
+  background-color: rgba(0, 0, 0, 0);
+  width: 100%;
+  color: #fff;
+  border: none;
+  margin-right: 10px;
+}
+
+.search-form__input:focus-visible {
+  box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.5);
+  outline: none;
+}
+
+.search-form__find {
+  margin: 19px 0;
+  margin-left: auto;
+  padding: 0;
+  padding-right: 99px;
+  width: 80px;
+  background-image: url(../../images/searchButton.svg);
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  border-right: 1px solid #505050;
+}
+
+@media screen and (max-width: 600px) {
+  .search-form {
+    padding: 80px 0 36px 0;
+    max-width: 600px;
+    width: calc(100% - 20px);
+    border-bottom: 1px solid #424242;
+  }
+  .search-form__container {
+    max-width: 600px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: none;
+  }
+  .search-form__icon-search {
+    display: none;
+  }
+  .search-form__input {
+    background-color: #222;
+    box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
+    margin-right: 0;
+    padding: 25px 0;
+    padding-left: 19px;
+    padding-right: 100px;
+    border-radius: 9px;
+    width: calc(100% - 120px);
+    grid-column-start: 1;
+    grid-column-end: -1;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+
+
+
+  .search-form__find {
+    margin-left: 0;
+    padding-right: 0;
+    height: 34px;
+    border-right: none;
+    grid-column-start: 2;
+    grid-column-end: -1;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    order: 2;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .search-form {
+    padding: 80px 0 110px 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .search-form {
+    padding: 80px 0 36px 0;
+  }
+}

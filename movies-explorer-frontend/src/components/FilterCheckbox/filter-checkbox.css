@@ -1,0 +1,52 @@
+.filter-checkbox {
+  margin: auto 0;
+  padding: 0 30px;
+  /* padding-right: 30px; */
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  display: flex;
+}
+
+.filter-checkbox__smalltumb {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 36px;
+  height: 20px;
+  opacity: 0;
+  overflow: hidden; /* без этого свойства тоже сработает, но так наверняка. Мы его ещё изучим, оно скрывает элементы, выходящие за границы родителя */
+  clip-path: inset(0 0 0 0);
+}
+
+.filter-checkbox__smalltumb + .filter-checkbox__smalltumb_visible {
+  margin: 0;
+  padding: 0;
+  padding-right: 14px;
+  display: block;
+  width: 36px;
+  height: 20px;
+  background-image: url(../../images/smalltumboffdark.svg);
+  background-repeat: no-repeat;
+}
+
+.filter-checkbox__smalltumb:checked + .filter-checkbox__smalltumb_visible {
+  opacity: 1;
+  background-image: url(../../images/smalltumb.svg);
+  background-position: left;
+}
+
+@media screen and (max-width: 600px) {
+  .filter-checkbox {
+    margin: 0 auto;
+    padding: 0;
+    padding-top: 45px;
+    padding-right: 0;
+    font-size: 11px;
+    line-height: 18px;
+    display: flex;
+    grid-column-start: 1;
+    grid-column-end: -1;
+  }
+}
