@@ -26,6 +26,7 @@ function Movies(props) {
           isLiked={props.isLiked}
           onClickButton={props.onClickButton}
           stateFilter={props.stateFilter}
+          showButton={true}
         ></MoviesCardList>
       ) : (
         <Preloader></Preloader>

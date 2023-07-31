@@ -44,7 +44,7 @@
 }
 
 .side-bar_active {
-  border-bottom: 2px solid #FFF;
+  border-bottom: 2px solid #fff;
 }
 
 @media screen and (max-width: 900px) {

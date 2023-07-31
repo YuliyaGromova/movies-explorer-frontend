@@ -6,28 +6,26 @@ import AboutMe from "../AboutMe/AboutMe.js";
 import Portfolio from "../Portfolio/Portfolio.js";
 
 function Main(props) {
-  function toogleHeader() {
+  function toggleHeader() {
     props.header(true);
   }
-  function toogleFooter() {
+  function toggleFooter() {
     props.footer(true);
   }
   React.useEffect(() => {
-      toogleHeader();
-    toogleFooter();
+    toggleHeader();
+    toggleFooter();
   }, []);
 
-  
-  return(
-    
+  return (
     <main className="content">
       <Promo></Promo>
-      <AboutProject ></AboutProject>
-      <Techs ></Techs>
+      <AboutProject></AboutProject>
+      <Techs></Techs>
       <AboutMe></AboutMe>
       <Portfolio></Portfolio>
     </main>
-  )
+  );
 }
 
 export default Main;

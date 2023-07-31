@@ -19,13 +19,14 @@ function SavedMovies(props) {
   return (
     <main className="content">
       <SearchForm filter={props.filter}></SearchForm>
-      {!props.answer ? (
+      {props.answer ? (
         <MoviesCardList
           movies={movies}
           onlyOwn={true}
           isLiked={props.isLiked}
           onClickButton={props.onClickButton}
           stateFilter={props.stateFilter}
+          showButton={false}
         ></MoviesCardList>
       ) : (
         <Preloader></Preloader>

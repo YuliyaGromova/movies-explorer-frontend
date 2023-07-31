@@ -11,7 +11,7 @@ function MoviesCard(props) {
     const min = movie.duration % 60;
     return hours + "ч " + min + "м";
   }
-  
+
   const isLiked = props.myCard(movie);
   return (
     <li className="movies-card">

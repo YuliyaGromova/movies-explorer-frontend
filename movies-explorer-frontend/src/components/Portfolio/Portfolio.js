@@ -1,22 +1,44 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import React from "react";
+import link from "../../images/link.svg";
 
 function Portfolio() {
   return (
     <section className="portfolio">
-      <h3 className="portfolio_label"> Портфолио</h3>
+      <h3 className="portfolio__label"> Портфолио</h3>
       <ul className="portfolio__links">
-        <li className="portfolio__link">
-          <p className="portfolio__name-link">Статичный сайт</p>
-          <a className="link-to-project button" href="https://github.com/YuliyaGromova/how-to-learn.git" target="_blank" rel="noopener noreferrer"></a>
+        <li className="portfolio__item">
+          <a
+            href="https://github.com/YuliyaGromova/how-to-learn.git"
+            className="portfolio__link link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <p className="portfolio__name-link">Статичный сайт</p>
+            <img className="link-to-project button" src={link} alt="стрелка" />
+          </a>
         </li>
-        <li className="portfolio__link">
-          <p className="portfolio__name-link">Адаптивный сайт</p>
-          <a className="link-to-project button" href="https://github.com/YuliyaGromova/russian-travel.git" target="_blank" rel="noopener noreferrer"></a>
+        <li className="portfolio__item">
+          <a
+            href="https://github.com/YuliyaGromova/russian-travel.git"
+            className="portfolio__link link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <p className="portfolio__name-link">Адаптивный сайт</p>
+            <img className="link-to-project button" src={link} alt="стрелка" />
+          </a>
         </li>
-        <li className="portfolio__link">
-          <p className="portfolio__name-link">Одностраничное приложение</p>
-          <a className="link-to-project button" href="https://github.com/YuliyaGromova/react-mesto-api-full-gha.git" target="_blank" rel="noopener noreferrer"></a>
+        <li className="portfolio__item">
+          <a
+            href="https://github.com/YuliyaGromova/react-mesto-api-full-gha.git"
+            className="portfolio__link link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <p className="portfolio__name-link">Одностраничное приложение</p>
+            <img className="link-to-project button" src={link} alt="стрелка" />
+          </a>
         </li>
       </ul>
     </section>

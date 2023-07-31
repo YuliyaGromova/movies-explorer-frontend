@@ -2,11 +2,11 @@ import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
 function MoviesCardList(props) {
-  const showButton = false; // костыль до этапа 3
+  const showButton = props.showButton; // костыль до этапа 3
 
   const movies = props.stateFilter
     ? props.movies.filter(function (item) {
-        return item.duration < 53;
+        return item.duration < 40;
       })
     : props.movies;
 

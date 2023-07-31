@@ -1,19 +1,18 @@
 import React from "react";
 import FormAuth from "../FormAuth/FormAuth";
-// import { Link } from 'react-router-dom';
 
 function Login(props) {
-   function toogleHeader() {
-      props.header(false);
-    }
-    function toogleFooter() {
-      props.footer(false);
-    }
-    React.useEffect(() => {
-      toogleHeader();
-      toogleFooter();
-    }, []);
-    
+  function toogleHeader() {
+    props.header(false);
+  }
+  function toogleFooter() {
+    props.footer(false);
+  }
+  React.useEffect(() => {
+    toogleHeader();
+    toogleFooter();
+  }, []);
+
   const title = "Рады видеть!";
   return (
     <FormAuth

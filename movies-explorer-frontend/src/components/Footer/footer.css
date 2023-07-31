@@ -25,7 +25,6 @@
   padding: 0;
   padding-bottom: 20px;
   display: flex;
-  color: #fff;
   font-size: 13px;
   font-weight: 400;
   line-height: normal;
@@ -36,17 +35,20 @@
   padding: 0;
   padding-top: 20px;
   margin-left: auto;
+  color: #fff;
 }
 
 .footer__year {
   margin: 0;
   padding: 0;
   padding-top: 20px;
+  color: #fff;
 }
 
 .footer__github {
   margin: 0;
   padding: 20px 0 0 20px;
+  color: #fff;
 }
 
 @media screen and (max-width: 900px) {
@@ -64,26 +66,25 @@
     font-size: 12px;
     line-height: normal;
   }
-  .footer__links{
+  .footer__links {
     flex-direction: column;
     font-size: 12px;
   }
-  .footer__github{
+  .footer__github {
     order: 2;
     margin: 0 auto;
     padding: 0;
     padding-top: 12px;
-
   }
-  .footer__yap{
+  .footer__yap {
     order: 1;
     margin: 0 auto;
     padding-top: 30px;
   }
-  .footer__year{
+  .footer__year {
     order: 3;
     margin: 0 auto;
-    color: #8B8B8B;
+    color: #8b8b8b;
     padding-top: 30px;
   }
 }

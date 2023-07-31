@@ -1,8 +1,6 @@
 import React from "react";
 // import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import { Routes, Route } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
 import myMovie from "../../utils/MoviesList";
 
 import NotFoundPage from "../NotFound/NotFoundPage.js";
@@ -18,13 +16,13 @@ import SideBar from "../SideBar/SideBar.js";
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true); // а залогинин ли пользователь
-  const [isEditProfile, setIsEditProfile] = React.useState(false); // открыт ли профиль в режиме редактирования
+  // const [isEditProfile, setIsEditProfile] = React.useState(false); // открыт ли профиль в режиме редактирования
   const [isOpenSideBar, setIsOpenSideBar] = React.useState(false); // открыт ли сайд бар
   const [isShowHeader, setIsShowHeader] = React.useState(true); // нужно ли показать шапку
   const [isShowFooter, setIsShowFooter] = React.useState(true); // нужно ли показать подвал
-  const [currentUser, setCurrentUser] = React.useState({}); // пользователь ( имя и почта)
+  // const [currentUser, setCurrentUser] = React.useState({}); // пользователь ( имя и почта)
   const [ownMovies, setOwnMovies] = React.useState(myMovie); // массив сохраненных фильмов
-  const [allFindMovies, setAllFindMovies] = React.useState([]); //массив фильмов найденных по поиску
+  // const [allFindMovies, setAllFindMovies] = React.useState([]); //массив фильмов найденных по поиску
   const [isOnlyShortFilm, senIsOnlyShortFilm] = React.useState(false); // сотсояние чекбокса фильтрующих короткометражки
 
   // React.useEffect(() => {
@@ -43,6 +41,10 @@ function App() {
   //       console.log(err);
   //     });
   // }, []);
+
+  function openSideBar() {
+    setIsOpenSideBar(true);
+  }
 
   function closeSideBar() {
     setIsOpenSideBar(false);
@@ -100,22 +102,16 @@ function App() {
   }
   // доработать в следующем этапе
   function LogOf() {
-    setLoggedIn(false)
+    setLoggedIn(false);
   }
 
   return (
     <div className="page">
-      {isShowHeader && <Header loggedIn={loggedIn} />}
+      {isShowHeader && <Header loggedIn={loggedIn} openSideBar={openSideBar} />}
       <Routes>
         <Route
           path="/"
-          element={
-            <Main
-              closeSideBar={closeSideBar}
-              header={toggleHeader}
-              footer={toggleFooter}
-            />
-          }
+          element={<Main header={toggleHeader} footer={toggleFooter} />}
         />
         <Route
           path="/movies"
@@ -129,7 +125,6 @@ function App() {
               onClickButton={handleMovieLike}
               filter={toggleFilterShortFilm}
               stateFilter={isOnlyShortFilm}
-              // shortMovie = {checkShortMovie}
             />
           }
         />
@@ -145,7 +140,6 @@ function App() {
               onClickButton={handleMovieDelete}
               filter={toggleFilterShortFilm}
               stateFilter={isOnlyShortFilm}
-              // shortMovie = {checkShortMovie}
             />
           }
         />
@@ -174,7 +168,7 @@ function App() {
         />
       </Routes>
       {isShowFooter && <Footer></Footer>}
-      {isOpenSideBar && <SideBar></SideBar>}
+      {isOpenSideBar && <SideBar closeSideBar={closeSideBar}></SideBar>}
     </div>
   );
 }

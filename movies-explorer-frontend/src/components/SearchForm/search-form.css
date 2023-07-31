@@ -33,19 +33,19 @@
 .search-form__input::-webkit-input-placeholder {
   font-size: 18px;
 }
-.search-form__input::-moz-placeholder          {
+.search-form__input::-moz-placeholder {
   font-size: 18px;
 }
-.search-form__input::-ms-input-placeholder     {
+.search-form__input::-ms-input-placeholder {
   font-size: 18px;
 }
-.search-form__input::placeholder               {
+.search-form__input::placeholder {
   font-size: 18px;
-} 
+}
 
 .search-form__input:focus-visible {
   outline: none;
-  border-bottom: 1px solid #8B8B8B;
+  border-bottom: 1px solid #8b8b8b;
 }
 
 .search-form__find {
@@ -97,8 +97,6 @@
     grid-row-start: 1;
     grid-row-end: 2;
   }
-
-
 
   .search-form__find {
     margin-left: 0;

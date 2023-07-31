@@ -1,8 +1,8 @@
 import React from "react";
 
-function AboutProject(props) {
+function AboutProject() {
   return (
-    <section className="about-project" id='project'>
+    <section className="about-project" id="project">
       <h2 className="about-project__title">О проекте</h2>
       <div className="about-project__info">
         <h3 className="about-project__info-title">

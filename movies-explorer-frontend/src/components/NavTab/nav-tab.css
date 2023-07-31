@@ -27,7 +27,7 @@
 }
 
 @media screen and (max-width: 900px) {
-  .promo__nav-menu{
+  .promo__nav-menu {
     gap: 6px;
     padding-bottom: 17px;
   }

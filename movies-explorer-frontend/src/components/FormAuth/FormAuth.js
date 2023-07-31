@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 
 function FormAuth(props) {
@@ -22,7 +21,7 @@ function FormAuth(props) {
 
   return (
     <section className="auth" id={props.name}>
-      <img className="auth__logo" src={logo} alt="логотип проекта"></img>
+      <Link to="/" className="auth__logo"></Link>
       <form
         className="auth__form"
         name={props.name}
@@ -92,9 +91,8 @@ function FormAuth(props) {
           <p className="auth__sign-in">{props.message} &nbsp;</p>
           <Link
             to={props.name === "register" ? "/signin" : "/signup"}
-            className="auth__link like"
+            className="auth__link link"
           >
-            {" "}
             {props.nameButtonReplace}
           </Link>
         </div>
