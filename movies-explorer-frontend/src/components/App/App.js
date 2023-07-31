@@ -3,6 +3,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
+import myMovie from "../../utils/MoviesList";
 
 import NotFoundPage from "../NotFound/NotFoundPage.js";
 import Header from "../Header/Header.js";
@@ -21,6 +22,27 @@ function App() {
   const [isOpenSideBar, setIsOpenSideBar] = React.useState(false); // открыт ли сайд бар
   const [isShowHeader, setIsShowHeader] = React.useState(true); // нужно ли показать шапку
   const [isShowFooter, setIsShowFooter] = React.useState(true); // нужно ли показать подвал
+  const [currentUser, setCurrentUser] = React.useState({}); // пользователь ( имя и почта)
+  const [ownMovies, setOwnMovies] = React.useState(myMovie); // массив сохраненных фильмов
+  const [allFindMovies, setAllFindMovies] = React.useState([]); //массив фильмов найденных по поиску
+  const [isOnlyShortFilm, senIsOnlyShortFilm] = React.useState(false); // сотсояние чекбокса фильтрующих короткометражки
+
+  // React.useEffect(() => {
+  //   Promise.all([
+  //     //в Promise.all передаем массив промисов которые нужно выполнить
+  //     // api не сделано
+  //     // api.getUserInfo(),
+  //     // api.getInitialMovies(),
+  //   ])
+  //     .then(([dataUserInfo, dataOwnMovies]) => {
+  //       setCurrentUser(dataUserInfo);
+  //       setOwnMovies(dataOwnMovies);
+  //     })
+  //     .catch((err) => {
+  //       //попадаем сюда если один из промисов завершаться ошибкой
+  //       console.log(err);
+  //     });
+  // }, []);
 
   function closeSideBar() {
     setIsOpenSideBar(false);
@@ -34,26 +56,80 @@ function App() {
     setIsShowFooter(state);
   }
 
+  function toggleFilterShortFilm(state) {
+    senIsOnlyShortFilm(state);
+  }
+
+  // профиль - следующий этап
+  function handleUpdateUser(data) {
+    // api.editUserInfo(data)
+    // .then((res) => {
+    //   setCurrentUser(res);
+    //
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // }
+    // )
+  }
+
+  // проверяем есть ли фильм в сохраненных (если есть то красим сердечко)
+  function isMovieLike(movie) {
+    const isLiked = ownMovies.find(function (item) {
+      return item.movieID === movie._id;
+    });
+    return isLiked;
+  }
+
+  // при клике на сердечко красим сердечко и снимаем окраску (и удаляем из сохраненных), если страница с найденными
+  // при клике удаляем из избранных, если страница с сохраненными
+  function handleMovieLike(movie) {
+    // следующий этап
+  }
+
+  function handleMovieDelete(movie) {
+    // примерно так - следующий этап
+    // api.deleteCardApi(movie._id)
+    // .then(()=>{
+    //   setOwnMovies((state) => state.filter((m) => m._id !== movie._id))
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // }
+    // )
+  }
+  // доработать в следующем этапе
+  function LogOf() {
+    setLoggedIn(false)
+  }
+
   return (
     <div className="page">
       {isShowHeader && <Header loggedIn={loggedIn} />}
       <Routes>
         <Route
           path="/"
-          element={<Main closeSideBar={closeSideBar} header={toggleHeader} footer={toggleFooter}/>}
-        />
-        <Route
-          path="/:id"
-          element={<Main closeSideBar={closeSideBar} header={toggleHeader} footer={toggleFooter}/>}
+          element={
+            <Main
+              closeSideBar={closeSideBar}
+              header={toggleHeader}
+              footer={toggleFooter}
+            />
+          }
         />
         <Route
           path="/movies"
           element={
             <Movies
-              answer={true}
+              answer={true} // предполагается что пришел ответ от сервера, иначе запускает бублик (пока ждем ответа)
               closeSideBar={closeSideBar}
               header={toggleHeader}
               footer={toggleFooter}
+              isLiked={isMovieLike}
+              onClickButton={handleMovieLike}
+              filter={toggleFilterShortFilm}
+              stateFilter={isOnlyShortFilm}
+              // shortMovie = {checkShortMovie}
             />
           }
         />
@@ -61,66 +137,43 @@ function App() {
           path="/saved-movies"
           element={
             <SavedMovies
-              answer={true}
+              answer={true} // ждем ответа от сервера при получении сохраненных фильмов (тру-ответ пришел)
               closeSideBar={closeSideBar}
               header={toggleHeader}
               footer={toggleFooter}
+              isLiked={isMovieLike}
+              onClickButton={handleMovieDelete}
+              filter={toggleFilterShortFilm}
+              stateFilter={isOnlyShortFilm}
+              // shortMovie = {checkShortMovie}
             />
           }
         />
-        <Route path="/profile" element={<Profile header={toggleHeader} footer={toggleFooter}/>} />
-        <Route path="/signin" element={<Login header={toggleHeader} footer={toggleFooter}/>} />
-        <Route path="/signup" element={<Register header={toggleHeader} footer={toggleFooter}/>} />
-        <Route path="*" element={<NotFoundPage header={toggleHeader} footer={toggleFooter}/>} />
+        <Route
+          path="/profile"
+          element={
+            <Profile
+              header={toggleHeader}
+              footer={toggleFooter}
+              onUpdateUser={handleUpdateUser}
+              logOf={LogOf}
+            />
+          }
+        />
+        <Route
+          path="/signin"
+          element={<Login header={toggleHeader} footer={toggleFooter} />}
+        />
+        <Route
+          path="/signup"
+          element={<Register header={toggleHeader} footer={toggleFooter} />}
+        />
+        <Route
+          path="*"
+          element={<NotFoundPage header={toggleHeader} footer={toggleFooter} />}
+        />
       </Routes>
       {isShowFooter && <Footer></Footer>}
-      {/* <CurrentUserContext.Provider value={currentUser}>
-        <Routes>
-          <Route path="/signup" element={<Register 
-        //   isOpenPage={setPage} onLogin={handleLogin} setAnswerReg={setAnswerReg} isOpenMessage={setInfoTooltipPopupOpen} handleOpenInfo={openInfoUser}
-          />} />
-          <Route
-            path="/signin"
-            element={<Login 
-                // isOpenPage={setPage} onLogin={handleLogin} setAnswerReg={setAnswerReg} isOpenMessage={setInfoTooltipPopupOpen} handleOpenInfo={openInfoUser} loginToHeader={setLogin}
-                />}
-          />
-          <Route
-            path="/profile"
-            element={<Profile 
-                editMode={isEditProfile}
-                // isOpenPage={setPage} onLogin={handleLogin} setAnswerReg={setAnswerReg} isOpenMessage={setInfoTooltipPopupOpen} handleOpenInfo={openInfoUser} loginToHeader={setLogin}
-                />}
-          />
-          {/* <Route
-            path="/"
-            element={
-              <ProtectedRouteElement
-                element={Main}
-                cards={cards}
-                onEditAvatar={handleEditAvatarClick}
-                onEditProfile={handleEditProfileClick}
-                onAddPlace={handleAddPlaceClick}
-                onCardClick={handleCardClick}
-                onCardLike={handleCardLike}
-                onCardDelete={handleCardDelete}
-                isOpenPage={setPage}
-                loggedIn={loggedIn}
-              />
-            }
-          /> */}
-      {/* <Route
-            path="*"
-            element={
-              loggedIn ? (
-                <Navigate to="/mesto" replace />
-              ) : (
-                <Navigate to="/sign-in" replace />
-              )
-            }
-          /> 
-        </Routes>
-        </CurrentUserContext.Provider> */}
       {isOpenSideBar && <SideBar></SideBar>}
     </div>
   );

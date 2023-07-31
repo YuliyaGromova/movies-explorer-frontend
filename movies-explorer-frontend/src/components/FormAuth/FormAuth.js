@@ -3,6 +3,23 @@ import logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 
 function FormAuth(props) {
+  const [isMessageError, setMessageError] = React.useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [isValidForm, setIsValidForm] = React.useState(false);
+
+  function handleChange(e) {
+    const message = e.target.validationMessage;
+    const key = e.target.name;
+    setMessageError({ ...isMessageError, [key]: message });
+  }
+  function checkValidity(e) {
+    const valid = e.target.form.checkValidity();
+    setIsValidForm(valid);
+  }
+
   return (
     <section className="auth" id={props.name}>
       <img className="auth__logo" src={logo} alt="логотип проекта"></img>
@@ -10,6 +27,7 @@ function FormAuth(props) {
         className="auth__form"
         name={props.name}
         onSubmit={props.onSubmit}
+        onChange={checkValidity}
         noValidate
       >
         <h2 className="auth__title">{props.title}</h2>
@@ -22,11 +40,11 @@ function FormAuth(props) {
               placeholder="Имя"
               id="name"
               name="name"
-              onChange={props.onChange}
               value={props.nameUser}
+              onChange={handleChange}
               required
             ></input>
-            <span className="auth__error-message"></span>
+            <span className="auth__error-message">{isMessageError.name}</span>
           </label>
         )}
         <label className="auth__label">
@@ -37,11 +55,11 @@ function FormAuth(props) {
             placeholder="Email"
             id="email"
             name="email"
-            onChange={props.onChange}
+            onChange={handleChange}
             value={props.email}
             required
           ></input>
-          <span className="auth__error-message"></span>
+          <span className="auth__error-message">{isMessageError.email}</span>
         </label>
         <label className="auth__label">
           Пароль
@@ -52,18 +70,33 @@ function FormAuth(props) {
             id="password"
             name="password"
             autoComplete="on"
-            onChange={props.onChange}
+            onChange={handleChange}
             value={props.password}
             required
           ></input>
-          <span className="auth__error-message"></span>
+          <span className="auth__error-message">{isMessageError.password}</span>
         </label>
-        <button className="auth__submit" type="submit" name="saveUser">
+        <button
+          className={
+            isValidForm
+              ? "auth__submit button"
+              : "auth__submit button button_disabled"
+          }
+          type="submit"
+          name="saveUser"
+          disabled={!isValidForm}
+        >
           {props.nameButton}
         </button>
         <div className="auth__switch-login">
           <p className="auth__sign-in">{props.message} &nbsp;</p>
-          <Link to={props.name === "register"? "/signin": "/signup"} className="auth__link link"> {props.nameButtonReplace}</Link>
+          <Link
+            to={props.name === "register" ? "/signin" : "/signup"}
+            className="auth__link like"
+          >
+            {" "}
+            {props.nameButtonReplace}
+          </Link>
         </div>
       </form>
     </section>

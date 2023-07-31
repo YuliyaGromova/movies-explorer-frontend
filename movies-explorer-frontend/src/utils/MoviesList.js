@@ -3,32 +3,38 @@ const MoviesList = [
         image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
         nameRu: "длинное название фильма, которое не помещается в одну строку и заходит на вторую",
         duration: 123,
-        _id: 1234
+        owner: 1234,
+        movieID: 1111,
+        _id: 9273581376598
     },
     {
         image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
         nameRu: "film 1",
-        duration: 123,
-        _id: 1254
+        duration: 52,
+        owner: 1234,
+        movieID: 2222,
+        _id: 9273581376509
     },
     {
         image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
         nameRu: "film 1",
-        duration: 123,
-        _id: 1235
+        duration: 11,
+        owner: 1234,
+        movieID: 3333,
+        _id: 9273581376512
     },
-    {
-        image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
-        nameRu: "film 1",
-        duration: 123,
-        _id: 4321
-    },
-    {
-        image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
-        nameRu: "film 1",
-        duration: 123,
-        _id: 1000
-    },
+    // {
+    //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
+    //     nameRu: "film 1",
+    //     duration: 123,
+    //     owner: 4321
+    // },
+    // {
+    //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
+    //     nameRu: "film 1",
+    //     duration: 123,
+    //     owner: 1000
+    // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
@@ -38,43 +44,43 @@ const MoviesList = [
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1001
+    //     owner: 1001
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1002
+    //     owner: 1002
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1003
+    //     owner: 1003
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1004
+    //     owner: 1004
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1005
+    //     owner: 1005
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1 ieuowuo woe owuo woi uwo owo wor w owro wo owu owo wor owr owow or wor ower owuro wuoru woru",
     //     duration: 123,
-    //     _id: 1006
+    //     owner: 1006
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1007
+    //     owner: 1007
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
@@ -86,61 +92,61 @@ const MoviesList = [
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1009
+    //     owner: 1009
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1010
+    //     owner: 1010
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1011
+    //     owner: 1011
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1012
+    //     owner: 1012
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1013
+    //     owner: 1013
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1014
+    //     owner: 1014
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1015
+    //     owner: 1015
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1016
+    //     owner: 1016
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1017
+    //     owner: 1017
     // },
     // {
     //     image: "https://images.unsplash.com/photo-1567589443762-44e6c1008639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80",
     //     nameRu: "film 1",
     //     duration: 123,
-    //     _id: 1018
+    //     owner: 1018
     // },
 ]
 

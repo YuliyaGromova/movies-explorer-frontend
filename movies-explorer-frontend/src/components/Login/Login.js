@@ -13,7 +13,7 @@ function Login(props) {
       toogleHeader();
       toogleFooter();
     }, []);
-  // const title=`Привет, ${props.login}!`;
+    
   const title = "Рады видеть!";
   return (
     <FormAuth
@@ -22,8 +22,6 @@ function Login(props) {
       nameButton="Войти"
       message="Ещё не зарегистрированы?"
       nameButtonReplace="Регистрация"
-      //    linkToLogin={<div className="auth__switch-login"><p className="auth__sign-in">Ещё не зарегистрированы? &nbsp;</p>
-      //   <button className="auth__link"> Регистрация</button></div>}
     ></FormAuth>
   );
 }

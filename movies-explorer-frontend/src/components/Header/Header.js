@@ -20,7 +20,7 @@ function Header(props) {
       ) : (
         <div className="header__auth">
           <Link to="/signup" className="header__reg-button link">Регистрация</Link>
-          <Link to="/signin" className="header__enter-button link">Войти</Link>
+          <Link to="/signin" className="header__enter-button button">Войти</Link>
         </div>
       )}
     </header>

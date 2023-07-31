@@ -41,7 +41,6 @@
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  cursor: pointer;
 }
 
 .movies-card__like_state_delete:hover {

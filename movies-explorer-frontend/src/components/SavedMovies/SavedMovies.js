@@ -5,7 +5,6 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import movies from "../../utils/MoviesList";
 
 function SavedMovies(props) {
-
   function toogleHeader() {
     props.header(true);
   }
@@ -19,9 +18,18 @@ function SavedMovies(props) {
 
   return (
     <main className="content">
-      <SearchForm></SearchForm>
-      {!props.answer && <Preloader></Preloader>}
-      <MoviesCardList movies={movies} onlyOwn={true}></MoviesCardList>
+      <SearchForm filter={props.filter}></SearchForm>
+      {!props.answer ? (
+        <MoviesCardList
+          movies={movies}
+          onlyOwn={true}
+          isLiked={props.isLiked}
+          onClickButton={props.onClickButton}
+          stateFilter={props.stateFilter}
+        ></MoviesCardList>
+      ) : (
+        <Preloader></Preloader>
+      )}
     </main>
   );
 }

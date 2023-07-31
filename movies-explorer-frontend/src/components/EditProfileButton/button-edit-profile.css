@@ -1,16 +1,10 @@
 .profile-button {
-  background-color: rgba(0, 0, 0, 0);
   width: 100px;
   padding: 0;
   margin: 0;
-  border: none;
   display: flex;
-  cursor: pointer;
 }
 
-/* .profile-button_place_header {
-  margin-left: auto;
-} */
 
 .profile-button_place_side-bar{
   display: none;

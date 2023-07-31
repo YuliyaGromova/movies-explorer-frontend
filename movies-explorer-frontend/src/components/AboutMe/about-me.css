@@ -22,7 +22,7 @@
   border-bottom: 1px solid #dadada;
 }
 
-.about-me__myPhoto {
+.about-me__my-photo {
   margin: 0;
   padding: 0;
   margin-left: auto;
@@ -86,7 +86,7 @@
     font-size: 18px;
     letter-spacing: -0.72px;
   }
-  .about-me__myPhoto {
+  .about-me__my-photo {
     width: 255px;
     height: 307px;
   }
@@ -123,14 +123,14 @@
     grid-column-end: -1;
     padding-bottom: 28px;
   }
-  .about-me__myPhoto {
+  .about-me__my-photo {
     grid-column-start: 1;
     grid-column-end: -1;
     grid-row-start: 2;
     grid-row-end: 3;
     margin-left: 0;
     margin: 0 auto;
-    padding-top: 60px;
+    margin-top: 60px;
     width: 292px;
     height: 352px;
   }

@@ -2,10 +2,15 @@ import React from "react";
 import FormEditProfile from "../FormEditProfile/FormEditProfile";
 
 function Profile(props) {
-    // const title=`Привет, ${props.login}!`;
-    return(
-       <FormEditProfile name="profile" nameUser="sweety" userEmail="cherry@eossot.ru"></FormEditProfile>
-    )
+  return (
+    <FormEditProfile
+      name="profile"
+      header={props.header}
+      footer={props.footer}
+      onUpdateUser={props.onUpdateUser}
+      logOf={props.logOf}
+    ></FormEditProfile>
+  );
 }
 
 export default Profile;

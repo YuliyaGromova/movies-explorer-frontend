@@ -5,7 +5,7 @@ function AboutMe(props) {
   return (
     <section className="about-me" id='me'>
       <h2 className="about-me__title">Студент</h2>
-      <img className="about-me__myPhoto" src={myPhoto} alt="здесь должна быть моя фотография"/>
+      <img className="about-me__my-photo" src={myPhoto} alt="здесь должна быть моя фотография"/>
       <h3 className="about-me__name">Юлия</h3>
       <p className="about-me__info">WEB-разработчик, 36 лет</p>
       <p className="about-me__info-detail">
