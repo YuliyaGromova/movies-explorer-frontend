@@ -71,3 +71,14 @@ input::placeholder {
   line-height: 1.1;
   color: #8b8b8b;
 }
+
+/* этот класс переиспользую в FormAuth (возможно) пока что он только в профиле*/
+.error-message {
+  color: #ff004c;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: normal;
+  padding-bottom: 20px;
+  margin-top: auto;
+}

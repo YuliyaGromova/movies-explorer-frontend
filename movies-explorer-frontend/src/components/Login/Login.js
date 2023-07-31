@@ -2,15 +2,15 @@ import React from "react";
 import FormAuth from "../FormAuth/FormAuth";
 
 function Login(props) {
-  function toogleHeader() {
+  function toggleHeader() {
     props.header(false);
   }
-  function toogleFooter() {
+  function toggleFooter() {
     props.footer(false);
   }
   React.useEffect(() => {
-    toogleHeader();
-    toogleFooter();
+    toggleHeader();
+    toggleFooter();
   }, []);
 
   const title = "Рады видеть!";

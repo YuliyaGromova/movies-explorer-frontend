@@ -5,15 +5,15 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import movies from "../../utils/MoviesList";
 
 function SavedMovies(props) {
-  function toogleHeader() {
+  function toggleHeader() {
     props.header(true);
   }
-  function toogleFooter() {
+  function toggleFooter() {
     props.footer(true);
   }
   React.useEffect(() => {
-    toogleHeader();
-    toogleFooter();
+    toggleHeader();
+    toggleFooter();
   }, []);
 
   return (

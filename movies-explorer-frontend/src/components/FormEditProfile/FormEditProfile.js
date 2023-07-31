@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function FormEditProfile(props) {
-  function toogleHeader() {
+  function toggleHeader() {
     props.header(true);
   }
-  function toogleFooter() {
+  function toggleFooter() {
     props.footer(false);
   }
   const [name, setName] = React.useState("Юленька"); // потом в скобках будет пусто
@@ -18,8 +18,8 @@ function FormEditProfile(props) {
   const [isValidForm, setIsValidForm] = React.useState(true); // при открытии окна редактирования профиля подгружаются нормальные данные (должны по крайней мере)
   // const currentUser = React.useContext(CurrentUserContext);
   React.useEffect(() => {
-    toogleFooter();
-    toogleHeader();
+    toggleFooter();
+    toggleHeader();
     setName(name); //потом будет currentUser.name
     setEmail(email); //потом будет currentUser.email
     setStateForm("read"); // тут можно менять состояние (read, edit, error)
@@ -63,7 +63,7 @@ function FormEditProfile(props) {
         onChange={checkValidity}
         noValidate
       >
-        <h2 className="profile__title">Привет, {name}!</h2>{" "}
+        <h2 className="profile__title">Привет, {name}!</h2>
         {/* сейчас name меняется при вводе данных, потом заменю на currentUser.name */}
         <label className="profile__label">
           Имя
@@ -96,12 +96,12 @@ function FormEditProfile(props) {
           <span className="profile__error-message">{isMessageError.email}</span>
         </label>
         {stateForm === "read" && (
-          <button className="edit-button link" onClick={handleChangeStateEdit}>
+          <button className="profile__edit-button link" onClick={handleChangeStateEdit}>
             Редактировать
           </button>
         )}
         {stateForm === "read" && (
-          <Link to="/" className="exit-button link" onClick={props.logOf}>
+          <Link to="/" className="profile__exit-button link" onClick={props.logOf}>
             Выйти из аккаунта
           </Link>
         )}
@@ -110,8 +110,8 @@ function FormEditProfile(props) {
           <button
             className={
               isValidForm
-                ? "submit-button button"
-                : "submit-button button button_disabled"
+                ? "profile__submit-button button"
+                : "profile__submit-button button button_disabled"
             }
             type="submit"
             onSubmit={handleSubmit}
@@ -127,7 +127,7 @@ function FormEditProfile(props) {
         )}
         {stateForm === "error" && (
           <button
-            className="submit-button submit-button_error button button_disabled"
+            className="profile__submit-button profile__submit-button_error button button_disabled"
             type="submit"
             disabled={true}
           >
