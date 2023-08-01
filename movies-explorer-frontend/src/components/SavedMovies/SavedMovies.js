@@ -5,6 +5,9 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import movies from "../../utils/MoviesList";
 
 function SavedMovies(props) {
+  function toggleStateFilter() {
+    props.filter(false);
+  }
   function toggleHeader() {
     props.header(true);
   }
@@ -14,6 +17,7 @@ function SavedMovies(props) {
   React.useEffect(() => {
     toggleHeader();
     toggleFooter();
+    toggleStateFilter();
   }, []);
 
   return (

@@ -24,7 +24,6 @@
   padding: 0;
   width: 84%;
   height: 32px;
-  /* padding-bottom: 32px; */
   color: #fff;
   font-size: 13px;
   font-weight: 500;
@@ -43,7 +42,7 @@
   background-repeat: no-repeat;
 }
 
-.movies-card__like_state_delete:hover {
+.movies-card__like_state_delete {
   background-image: url(../../images/d1.svg);
 }
 

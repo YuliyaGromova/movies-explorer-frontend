@@ -2,14 +2,15 @@
   margin: 0 auto;
   padding: 0;
   width: 410px;
-  min-height: 700px;
 }
 
 .profile__form {
   color: #fff;
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: calc(100vh - 74px);
+  min-height: 626px;
 }
 
 .profile__title {
@@ -113,6 +114,9 @@
 }
 
 @media screen and (max-width: 900px) {
+  .profile__form {
+    min-height: 950px;
+  }
   .profile__title {
     padding-top: 236px;
     padding-bottom: 80px;
@@ -128,6 +132,9 @@
 @media screen and (max-width: 600px) {
   .profile {
     width: 260px;
+  }
+  .profile__form {
+    min-height: 686px;
   }
   .profile__title {
     padding-top: 70px;

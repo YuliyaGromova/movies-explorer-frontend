@@ -5,6 +5,10 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import movies from "../../utils/FindMoviesList";
 
 function Movies(props) {
+  function toggleStateFilter() {
+    props.filter(false);
+  }
+
   function toggleHeader() {
     props.header(true);
   }
@@ -14,6 +18,7 @@ function Movies(props) {
   React.useEffect(() => {
     toggleHeader();
     toggleFooter();
+    toggleStateFilter();
   }, []);
 
   return (

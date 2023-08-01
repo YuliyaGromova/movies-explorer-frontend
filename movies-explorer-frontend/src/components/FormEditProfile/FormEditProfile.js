@@ -104,7 +104,7 @@ function FormEditProfile(props) {
           <Link to="/" className="profile__exit-button link" onClick={props.logOf}>
             Выйти из аккаунта
           </Link>
-        )}
+        )} 
         {/* не забыть функцию выхода */}
         {stateForm === "edit" && (
           <button

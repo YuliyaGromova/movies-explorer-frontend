@@ -1,6 +1,6 @@
 import React from "react";
 
-function NavTab(props) {
+function NavTab() {
   return (
     <nav className="promo__nav">
       <ul className="promo__nav-menu">

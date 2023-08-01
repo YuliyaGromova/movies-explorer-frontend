@@ -23,7 +23,7 @@ function App() {
   // const [currentUser, setCurrentUser] = React.useState({}); // пользователь ( имя и почта)
   const [ownMovies, setOwnMovies] = React.useState(myMovie); // массив сохраненных фильмов
   // const [allFindMovies, setAllFindMovies] = React.useState([]); //массив фильмов найденных по поиску
-  const [isOnlyShortFilm, senIsOnlyShortFilm] = React.useState(false); // сотсояние чекбокса фильтрующих короткометражки
+  const [isOnlyShortFilm, setIsOnlyShortFilm] = React.useState(false); // сотсояние чекбокса фильтрующих короткометражки
 
   // React.useEffect(() => {
   //   Promise.all([
@@ -58,9 +58,6 @@ function App() {
     setIsShowFooter(state);
   }
 
-  function toggleFilterShortFilm(state) {
-    senIsOnlyShortFilm(state);
-  }
 
   // профиль - следующий этап
   function handleUpdateUser(data) {
@@ -123,7 +120,7 @@ function App() {
               footer={toggleFooter}
               isLiked={isMovieLike}
               onClickButton={handleMovieLike}
-              filter={toggleFilterShortFilm}
+              filter={setIsOnlyShortFilm}
               stateFilter={isOnlyShortFilm}
             />
           }
@@ -138,7 +135,7 @@ function App() {
               footer={toggleFooter}
               isLiked={isMovieLike}
               onClickButton={handleMovieDelete}
-              filter={toggleFilterShortFilm}
+              filter={setIsOnlyShortFilm}
               stateFilter={isOnlyShortFilm}
             />
           }

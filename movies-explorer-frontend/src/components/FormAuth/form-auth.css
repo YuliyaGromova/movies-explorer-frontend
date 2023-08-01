@@ -27,6 +27,7 @@
   height: calc(100vh - 108px);
   display: flex;
   flex-direction: column;
+  min-height: 592px;
 }
 
 .auth__title {
@@ -128,12 +129,13 @@
 @media screen and (max-width: 900px) {
   .auth__form {
     height: calc(100vh - 270px);
+    min-height: 754px;
   }
   .auth__logo {
     margin-top: 232px;
   }
   .auth__switch-login {
-    padding-bottom: 232px;
+    margin-bottom: 232px;
   }
 }
 
@@ -154,6 +156,7 @@
   }
   .auth__form {
     height: calc(100vh - 94px);
+    min-height: 666px;
   }
   .auth__title {
     padding: 50px 0 80px 0;

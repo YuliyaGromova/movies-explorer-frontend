@@ -18,6 +18,7 @@
   opacity: 0;
   overflow: hidden;
   clip-path: inset(0 0 0 0);
+  cursor: pointer;
 }
 
 .filter-checkbox__smalltumb + .filter-checkbox__smalltumb_visible {
@@ -29,11 +30,16 @@
   height: 20px;
   background-image: url(../../images/smalltumboffdark.svg);
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .filter-checkbox__smalltumb:checked + .filter-checkbox__smalltumb_visible {
   background-image: url(../../images/smalltumb.svg);
   background-position: left;
+}
+
+.filter-checkbox__smalltumb:hover + .filter-checkbox__smalltumb_visible {
+  opacity: .8;
 }
 
 @media screen and (max-width: 600px) {

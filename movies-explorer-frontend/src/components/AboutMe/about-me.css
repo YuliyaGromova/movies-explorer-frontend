@@ -64,7 +64,7 @@
   font-weight: 400;
   line-height: 22px;
   max-width: 600px;
-  width: 53%;
+  width: 100%;
 }
 
 .about-me__github {
@@ -84,8 +84,7 @@
   }
   .about-me__title {
     margin-top: 90px;
-    font-size: 18px;
-    letter-spacing: -0.72px;
+    font-size: 22px;
   }
   .about-me__my-photo {
     width: 255px;
@@ -109,7 +108,7 @@
     width: 100%;
   }
   .about-me__github {
-    padding-top: 83px;
+    margin-top: 87px;
   }
 }
 
@@ -123,6 +122,7 @@
   .about-me__title {
     grid-column-end: -1;
     padding-bottom: 28px;
+    font-size: 18px;
   }
   .about-me__my-photo {
     grid-column-start: 1;
@@ -152,6 +152,6 @@
     width: 95%;
   }
   .about-me__github {
-    padding-top: 40px;
+    margin-top: 40px;
   }
 }
