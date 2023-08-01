@@ -16,7 +16,7 @@ function Header(props) {
         <div className="header__buttons">
           <ButtonEditProfile place="header"></ButtonEditProfile>
           <button
-            className="header__burger"
+            className="header__burger button"
             onClick={props.openSideBar}
           ></button>
         </div>
