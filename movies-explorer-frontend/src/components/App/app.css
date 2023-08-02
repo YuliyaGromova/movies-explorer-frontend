@@ -1,0 +1,84 @@
+.page {
+  margin: 0;
+  padding: 0;
+  background-color: #202020;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  font-weight: normal;
+  min-height: 100vh;
+  position: relative;
+}
+
+.link {
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
+.button {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.button_disabled {
+  cursor: auto;
+  opacity: 0.2;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.button_disabled:hover {
+  opacity: 0.2;
+}
+
+input::-webkit-input-placeholder {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: #8b8b8b;
+}
+input::-moz-placeholder {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: #8b8b8b;
+}
+input::-ms-input-placeholder {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: #8b8b8b;
+}
+input::placeholder {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: #8b8b8b;
+}
+
+/* этот класс переиспользую в FormAuth (возможно) пока что он только в профиле*/
+.error-message {
+  color: #ff004c;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: normal;
+  padding-bottom: 20px;
+  margin-top: auto;
+}
