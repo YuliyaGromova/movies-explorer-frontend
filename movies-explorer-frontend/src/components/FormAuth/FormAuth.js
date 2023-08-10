@@ -10,6 +10,7 @@ function FormAuth(props) {
   const [isValidForm, setIsValidForm] = React.useState(false);
 
   function handleChange(e) {
+    props.onChange(e);
     const message = e.target.validationMessage;
     const key = e.target.name;
     setMessageError({ ...isMessageError, [key]: message });

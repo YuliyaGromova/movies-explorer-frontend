@@ -1,51 +1,47 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
 function FormEditProfile(props) {
-  function toggleHeader() {
-    props.header(true);
-  }
-  function toggleFooter() {
-    props.footer(false);
-  }
-  const [name, setName] = React.useState("Юленька"); // потом в скобках будет пусто
-  const [email, setEmail] = React.useState("chervyak_9@mail.ru"); // потом в скобках будет пусто
-  const [stateForm, setStateForm] = React.useState(""); // состояние формы (просмотр, редактирование, ошибка)
+  // function toggleHeader() {
+  //   props.header(true);
+  // }
+  // function toggleFooter() {
+  //   props.footer(false);
+  // }
+  // const currentUser = React.useContext(CurrentUserContext);
+  // const [name, setName] = React.useState(currentUser.name); // потом в скобках будет пусто
+  // const [email, setEmail] = React.useState(currentUser.email); // потом в скобках будет пусто
+  // const [stateForm, setStateForm] = React.useState(""); // состояние формы (просмотр, редактирование, ошибка)
   const [isMessageError, setMessageError] = React.useState({
     name: "",
     email: "",
   });
   const [isValidForm, setIsValidForm] = React.useState(true); // при открытии окна редактирования профиля подгружаются нормальные данные (должны по крайней мере)
-  // const currentUser = React.useContext(CurrentUserContext);
-  React.useEffect(() => {
-    toggleFooter();
-    toggleHeader();
-    setName(name); //потом будет currentUser.name
-    setEmail(email); //потом будет currentUser.email
-    setStateForm("read"); // тут можно менять состояние (read, edit, error)
-  }, []);
+  
+  
 
-  function handleSubmit(e) {
-    // Запрещаем браузеру переходить по адресу формы
-    e.preventDefault();
-    // Передаём значения управляемых компонентов во внешний обработчик
-    // props.onUpdateUser({
-    //   name,
-    //   email,
-    // });
-  }
+  // function handleSubmit(e) {
+  //   // Запрещаем браузеру переходить по адресу формы
+  //   e.preventDefault();
+  //   // Передаём значения управляемых компонентов во внешний обработчик
+  //   props.onUpdate({
+  //     name,
+  //     email,
+  //   });
+  // }
 
   function handleChangeStateEdit(e) {
     e.preventDefault();
-    setStateForm("edit");
+    props.changeState("edit");
   }
 
   function handleChangeName(e) {
-    setName(e.target.value);
+    props.setName(e.target.value);
     setMessageError({ ...isMessageError, name: e.target.validationMessage });
   }
   function handleChangeEmail(e) {
-    setEmail(e.target.value);
+    props.setEmail(e.target.value);
     setMessageError({ ...isMessageError, email: e.target.validationMessage });
   }
 
@@ -63,7 +59,7 @@ function FormEditProfile(props) {
         onChange={checkValidity}
         noValidate
       >
-        <h2 className="profile__title">Привет, {name}!</h2>
+        <h2 className="profile__title">Привет, {props.userName}!</h2>
         {/* сейчас name меняется при вводе данных, потом заменю на currentUser.name */}
         <label className="profile__label">
           Имя
@@ -74,8 +70,8 @@ function FormEditProfile(props) {
             id="name"
             name="name"
             onChange={handleChangeName}
-            value={name}
-            disabled={stateForm === "read"}
+            value={props.userName}
+            disabled={props.stateForm === "read"}
             required
           ></input>
           <span className="profile__error-message">{isMessageError.name}</span>
@@ -89,24 +85,24 @@ function FormEditProfile(props) {
             id="email"
             name="email"
             onChange={handleChangeEmail}
-            value={email}
-            disabled={stateForm === "read"}
+            value={props.userEmail}
+            disabled={props.stateForm === "read"}
             required
           ></input>
           <span className="profile__error-message">{isMessageError.email}</span>
         </label>
-        {stateForm === "read" && (
+        {props.stateForm === "read" && (
           <button className="profile__edit-button link" onClick={handleChangeStateEdit}>
             Редактировать
           </button>
         )}
-        {stateForm === "read" && (
+        {props.stateForm === "read" && (
           <Link to="/" className="profile__exit-button link" onClick={props.logOf}>
             Выйти из аккаунта
           </Link>
         )} 
         {/* не забыть функцию выхода */}
-        {stateForm === "edit" && (
+        {props.stateForm === "edit" && (
           <button
             className={
               isValidForm
@@ -114,18 +110,18 @@ function FormEditProfile(props) {
                 : "profile__submit-button button button_disabled"
             }
             type="submit"
-            onSubmit={handleSubmit}
+            onSubmit={props.onSubmit}
             disabled={!isValidForm}
           >
             Сохранить
           </button>
         )}
-        {stateForm === "error" && (
+        {props.stateForm === "error" && (
           <span className="error-message">
             При обновлении профиля произошла ошибка.
           </span>
         )}
-        {stateForm === "error" && (
+        {props.stateForm === "error" && (
           <button
             className="profile__submit-button profile__submit-button_error button button_disabled"
             type="submit"

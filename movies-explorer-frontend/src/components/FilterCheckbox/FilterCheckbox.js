@@ -1,8 +1,11 @@
 import React from "react";
 
 function FilterCheckbox(props) {
-  const filter = (e) => {
-    props.filter(e.target.checked);
+  const defaultState = (props.onlyOwn)? false: JSON.parse(localStorage.getItem("short"));
+  const [checked, setChecked] = React.useState(defaultState);
+const changeFilter = (e) => {
+    setChecked(!checked);
+    props.filterShort(e.target.checked);
   };
 
   return (
@@ -10,7 +13,8 @@ function FilterCheckbox(props) {
       <input
         type="checkbox"
         className="filter-checkbox__smalltumb"
-        onClick={filter}
+        onChange={changeFilter}
+        checked={checked}
       ></input>
       <span className="filter-checkbox__smalltumb_visible"></span>
       {props.nameFilter}
