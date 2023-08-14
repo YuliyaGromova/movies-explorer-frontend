@@ -3,9 +3,13 @@ import profilePic from "../../images/iconProfile.svg";
 import { Link } from "react-router-dom";
 
 function ButtonEditProfile(props) {
+  function changeState() {
+    props.changeStateForm("read");
+  }
   return (
     <Link
       to="/profile"
+      onClick={changeState}
       className={`profile-button profile-button_place_${props.place} link`}
     >
       <p className="profile-button__label-button">Аккаунт</p>

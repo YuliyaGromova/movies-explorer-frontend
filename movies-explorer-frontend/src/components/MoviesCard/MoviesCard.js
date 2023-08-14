@@ -1,9 +1,10 @@
 import React from "react";
 
+
 function MoviesCard(props) {
   const movie = props.movie;
   const onlyOwn = props.onlyOwn; //для страницы сохраненных фильмов
-
+  
   const duration = convertMinInHour();
   const image = (onlyOwn)? movie.image: `https://api.nomoreparties.co` + movie.image.url;
 

@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import FormAuth from "../FormAuth/FormAuth";
 import mainApi from "../../utils/MainApi.js";
+// import getErrorMessage from "../../utils/error.js"
+import { LOGIN_ERROR, ENTER_SUCCESS  } from "../../utils/message";
 
 function Login(props) {
   const navigate = useNavigate();
@@ -11,6 +13,8 @@ function Login(props) {
     password: "",
   });
 
+  const [errorMessage, setErrorMessage] = React.useState("")
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -19,18 +23,6 @@ function Login(props) {
       [name]: value,
     });
   };
-
-  function toggleHeader() {
-    props.header(false);
-  }
-  function toggleFooter() {
-    props.footer(false);
-  }
-  React.useEffect(() => {
-    toggleHeader();
-    toggleFooter();
-  }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const { password, email } = formValue;
@@ -45,17 +37,32 @@ function Login(props) {
           localStorage.setItem("token", data.token);
           setFormValue({ name: "", email: "", password: "" });
           navigate("/movies", { replace: true });
+          props.setMessageToUser(ENTER_SUCCESS);
+          props.openTooltip(true);
         }
       })
       .catch((err) => {
         console.log(err);
+        props.changeStateForm("error");
+        setErrorMessage(LOGIN_ERROR);
       });
-    // props.setAnswerReg(false);
-    // props.isOpenMessage(true);
-    // .finally(() => props.isOpenMessage(true))
   };
 
+
   const title = "Рады видеть!";
+
+  function toggleHeader() {
+    props.header(false);
+  }
+  function toggleFooter() {
+    props.footer(false);
+  }
+  React.useEffect(() => {
+    toggleHeader();
+    toggleFooter();
+    props.changeStateForm("edit");
+  }, []);
+
   return (
     <FormAuth
       name="login"
@@ -65,6 +72,10 @@ function Login(props) {
       nameButtonReplace="Регистрация"
       onSubmit={handleSubmit}
       onChange={handleChange}
+      setFormValue={setFormValue}
+      stateForm={props.stateForm}
+      changeState={props.changeStateForm}
+      error={errorMessage}
     ></FormAuth>
   );
 }

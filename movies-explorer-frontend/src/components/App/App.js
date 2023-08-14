@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 import { Routes, Route } from "react-router-dom";
 // import myMovie from "../../utils/MoviesList";
@@ -13,20 +14,29 @@ import Footer from "../Footer/Footer.js";
 import Movies from "../Movies/Movies.js";
 import SavedMovies from "../SavedMovies/SavedMovies.js";
 import SideBar from "../SideBar/SideBar.js";
+import Tooltip from "../Tooltip/Tooltip.js";
 import mainApi from "../../utils/MainApi.js";
-import moviesApi from "../../utils/MoviesApi.js";
+import {
+  PROFILE_EDIT_SUCCES,
+  SERVER_ERROR,
+  ADD_MOVIE_SUCCESS,
+  ADD_MOVIE_FAIL,
+  DELETE_SUCCESS,
+  DELETE_FAIL,
+  ENTER_SUCCESS,
+} from "../../utils/message.js";
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(false); // а залогинин ли пользователь
-  // const [isEditProfile, setIsEditProfile] = React.useState(false); // открыт ли профиль в режиме редактирования
   const [isOpenSideBar, setIsOpenSideBar] = React.useState(false); // открыт ли сайд бар
-  const [isShowHeader, setIsShowHeader] = React.useState(true); // нужно ли показать шапку
-  const [isShowFooter, setIsShowFooter] = React.useState(true); // нужно ли показать подвал
+  const [isShowHeader, setIsShowHeader] = React.useState(false); // нужно ли показать шапку
+  const [isShowFooter, setIsShowFooter] = React.useState(false); // нужно ли показать подвал
   const [currentUser, setCurrentUser] = React.useState({}); // пользователь ( имя и почта)
   const [ownMovies, setOwnMovies] = React.useState([]); // массив сохраненных фильмов
   const [answer, setAnswer] = React.useState(true); // ожидание ответа от сервера (тру- ответа не ждем, фалсе - ждем ответа)
-
-  // const [isOnlyShortFilm, setIsOnlyShortFilm] = React.useState(false); // сотсояние чекбокса фильтрующих короткометражки
+  const [stateForm, setStateForm] = React.useState(""); // состояние формы (просмотр, редактирование, ошибка)
+  const [messageToUser, setMessageToUser] = React.useState("");
+  const [isOpenTooltip, setIsOpenTooltip] = React.useState(false);
 
   React.useEffect(() => {
     checkToken();
@@ -46,12 +56,11 @@ function App() {
         .catch((err) => {
           //попадаем сюда если один из промисов завершаться ошибкой
           console.log(err);
+          setMessageToUser(SERVER_ERROR);
+          openTooltip();
         });
     }
   }, [loggedIn]);
-
-  // проверяем токен
-  // const navigate = useNavigate();
 
   const checkToken = () => {
     if (localStorage.getItem("token")) {
@@ -60,15 +69,21 @@ function App() {
         mainApi.getContent().then((res) => {
           if (res) {
             setLoggedIn(true);
+            setMessageToUser(ENTER_SUCCESS);
+            openTooltip();
           }
         });
       }
     }
   };
-// console.log(loggedIn);
   // изменяем состояние "залогинен ли"
   function handleLogin(loggedIn) {
     setLoggedIn(loggedIn);
+  }
+
+  function openTooltip() {
+    setIsOpenTooltip(true);
+    setTimeout(()=> {setIsOpenTooltip(false);}, 2000)
   }
 
   // сайд бар открыт
@@ -97,9 +112,12 @@ function App() {
       .editUserInfo(data)
       .then((res) => {
         setCurrentUser(res);
+        setMessageToUser(PROFILE_EDIT_SUCCES);
+        openTooltip();
       })
       .catch((err) => {
         console.log(err);
+        setStateForm("error");
       });
   }
 
@@ -111,46 +129,45 @@ function App() {
 
   // при клике на сердечко красим сердечко и снимаем окраску (и удаляем из сохраненных), если страница с найденными
   // при клике удаляем из избранных, если страница с сохраненными
-  
+
   function handleMovieLike(movie) {
-    // const isLiked = ownMovies.some((i) => i.movieId === movie.id);
     const isLiked = isMovieLike(movie);
-    const savedMovie = ownMovies.find((item) => item.movieId === movie.id) || {};
+    const savedMovie =
+      ownMovies.find((item) => item.movieId === movie.id) || {};
     // Отправляем запрос в API и получаем обновлённые данные карточки
     if (!isLiked) {
-      mainApi.addNewMovie(movie)
-      .then((newMovie) => setOwnMovies([newMovie, ...ownMovies]))
-      .catch((err) => {
-        console.log(err);
-      });
+      mainApi
+        .addNewMovie(movie)
+        .then((newMovie) => {
+          setOwnMovies([newMovie, ...ownMovies]);
+          setMessageToUser(ADD_MOVIE_SUCCESS);
+          openTooltip();
+        })
+        .catch((err) => {
+          console.log(err);
+          setMessageToUser(ADD_MOVIE_FAIL);
+          openTooltip();
+        });
     } else {
-      console.log(savedMovie._id)
       handleMovieDelete(savedMovie);
     }
-    // api
-    //   .changeLikeCardStatus(card._id, !isLiked)
-    //   .then((newCard) => {
-    //     setCards((state) =>
-    //       state.map((c) => (c._id === card._id ? newCard : c))
-    //     );
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   }
 
   function handleMovieDelete(movie) {
-    // примерно так - следующий этап
-    mainApi.deleteMoviesApi(movie._id)
-    .then(()=>{
-      setOwnMovies((state) => state.filter((m) => m._id !== movie._id))
-    })
-    .catch((err) => {
-      console.log(err);
-    }
-    )
+    mainApi
+      .deleteMoviesApi(movie._id)
+      .then(() => {
+        setOwnMovies((state) => state.filter((m) => m._id !== movie._id));
+        setMessageToUser(DELETE_SUCCESS);
+        openTooltip();
+      })
+      .catch((err) => {
+        console.log(err);
+        setMessageToUser(DELETE_FAIL);
+        openTooltip();
+      });
   }
-  // доработать в следующем этапе
+
   function LogOf() {
     setLoggedIn(false);
     localStorage.clear();
@@ -158,7 +175,13 @@ function App() {
 
   return (
     <div className="page">
-      {isShowHeader && <Header loggedIn={loggedIn} openSideBar={openSideBar} />}
+      {isShowHeader && (
+        <Header
+          loggedIn={loggedIn}
+          openSideBar={openSideBar}
+          changeStateForm={setStateForm}
+        />
+      )}
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
           <Route
@@ -168,7 +191,8 @@ function App() {
           <Route
             path="/movies"
             element={
-              <Movies
+              <ProtectedRouteElement
+                element={Movies}
                 answer={answer} // предполагается что пришел ответ от сервера, иначе запускает бублик (пока ждем ответа)
                 setAnswer={setAnswer}
                 closeSideBar={closeSideBar}
@@ -176,13 +200,15 @@ function App() {
                 footer={toggleFooter}
                 isLiked={isMovieLike}
                 onClickButtonLike={handleMovieLike}
+                loggedIn={loggedIn}
               />
             }
           />
           <Route
             path="/saved-movies"
             element={
-              <SavedMovies
+              <ProtectedRouteElement
+                element={SavedMovies}
                 answer={answer} // ждем ответа от сервера при получении сохраненных фильмов (тру-ответ пришел)
                 closeSideBar={closeSideBar}
                 header={toggleHeader}
@@ -191,20 +217,23 @@ function App() {
                 onClickButton={handleMovieDelete}
                 setAnswer={setAnswer}
                 onClickButtonLike={handleMovieDelete}
-                // filter={setIsOnlyShortFilm}
-                // stateFilter={isOnlyShortFilm}
                 movies={ownMovies}
+                loggedIn={loggedIn}
               />
             }
           />
           <Route
             path="/profile"
             element={
-              <Profile
+              <ProtectedRouteElement
+                element={Profile}
                 header={toggleHeader}
                 footer={toggleFooter}
                 onUpdateUser={handleUpdateUser}
                 logOf={LogOf}
+                loggedIn={loggedIn}
+                stateForm={stateForm}
+                changeStateForm={setStateForm}
               />
             }
           />
@@ -215,6 +244,10 @@ function App() {
                 header={toggleHeader}
                 footer={toggleFooter}
                 onLogin={handleLogin}
+                stateForm={stateForm}
+                changeStateForm={setStateForm}
+                setMessageToUser={setMessageToUser}
+                openTooltip={openTooltip}
               />
             }
           />
@@ -225,6 +258,10 @@ function App() {
                 header={toggleHeader}
                 footer={toggleFooter}
                 onLogin={handleLogin}
+                stateForm={stateForm}
+                changeStateForm={setStateForm}
+                openTooltip={openTooltip}
+                setMessageToUser={setMessageToUser}
               />
             }
           />
@@ -239,6 +276,7 @@ function App() {
 
       {isShowFooter && <Footer></Footer>}
       {isOpenSideBar && <SideBar closeSideBar={closeSideBar}></SideBar>}
+      {isOpenTooltip && <Tooltip closeTooltip={setIsOpenTooltip} message={messageToUser}></Tooltip>}
     </div>
   );
 }

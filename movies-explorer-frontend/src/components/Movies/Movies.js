@@ -2,28 +2,34 @@ import React from "react";
 import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import { FIRST_MESSAGE, NOTHING_FOUND, ERROR_SEARCH } from "../../utils/message";
+import {
+  FIRST_MESSAGE,
+  NOTHING_FOUND,
+  ERROR_SEARCH,
+} from "../../utils/message";
 import moviesApi from "../../utils/MoviesApi.js";
 
-
 function Movies(props) {
-
   const [isOnlyShortFilm, setIsOnlyShortFilm] = React.useState(false); // сотсояние чекбокса фильтрующих короткометражки
   const [message, setMessage] = React.useState("");
   const [keyWordSearch, setKeyWordSearch] = React.useState(localStorage.getItem("keyWord"));
-  const [allFoundMovies, setAllFoundMovies] = React.useState([]);
-
-  function setFoundMovies () {
+  
+  const [allMovies, setAllMovies] = React.useState(JSON.parse(localStorage.getItem("allFindMovies"))); //фильмы полученные в результате запроса и внешнего сервера (не фильтрованные)
+  // const [allMovies, setAllMovies] = React.useState(null); //фильмы полученные в результате запроса и внешнего сервера (не фильтрованные)
+  // const localMovie = JSON.parse(localStorage.getItem("allFindMovies"));
+  function setFoundMovies() {
     props.setAnswer(false);
     moviesApi
       .getMovies()
       .then((res) => {
-        localStorage.setItem("allFindMovies", JSON.stringify(res));
-        setAllFoundMovies(JSON.parse(localStorage.getItem("allFindMovies")));
+        // localStorage.setItem("allFindMovies", JSON.stringify(res));
+        setAllMovies(res);
       })
       .catch(() => setMessage(ERROR_SEARCH))
-      .finally(() => {props.setAnswer(true)});
-  };
+      .finally(() => {
+        props.setAnswer(true);
+      });
+  }
 
   React.useEffect(() => {
     toggleHeader();
@@ -32,22 +38,26 @@ function Movies(props) {
     const word = localStorage.getItem("keyWord");
     const short = JSON.parse(localStorage.getItem("short"));
     const movies = JSON.parse(localStorage.getItem("allFindMovies"));
-    if (!word) {
-      setKeyWordSearch(null);
-    }
-    if (short == null) {
-      setIsOnlyShortFilm(false);
-    } else {
-      setIsOnlyShortFilm(short);
-    }
     if (movies == null) {
       setMessage(FIRST_MESSAGE);
+      // setKeyWordSearch(null);
+      setIsOnlyShortFilm(false);
+      localStorage.removeItem("keyWord");
+      localStorage.removeItem("short");
+      setKeyWordSearch(null);
       // setFoundMovies();
-    } 
-    
+    } else {
+      if (word == null) {
+        setKeyWordSearch(null);
+      }
+      if (short == null) {
+        setIsOnlyShortFilm(false);
+      } else {
+        setIsOnlyShortFilm(short);
+      }
+    }
   }, []); // эффект срабатывает только один раз - при самом первом рендеринге
   React.useEffect(() => {
-    setAllFoundMovies(JSON.parse(localStorage.getItem("allFindMovies")));
   }, [keyWordSearch, isOnlyShortFilm]);
 
   function toggleHeader() {
@@ -55,7 +65,10 @@ function Movies(props) {
   }
   function toggleFooter() {
     props.footer(true);
+
   }
+
+  // console.log(`width: ${width}px, isScreenS: ${String(isScreenS)}, isScreenM: ${String(isScreenM)}, isScreenL: ${String(isScreenL)}`);
 
   return (
     <main className="content">
@@ -66,25 +79,24 @@ function Movies(props) {
         keyWord={keyWordSearch}
         changeMessage={setMessage}
         stateFilter={isOnlyShortFilm}
-        getMovies={setAllFoundMovies}
-        getAllMovies={setFoundMovies}
+        getAllMovies={setFoundMovies} // запрос на получение массива извне
       ></SearchForm>
-      {
-        props.answer ?
-          <MoviesCardList
-            onlyOwn={false}
-            isLiked={props.isLiked}
-            onClickButton={props.onClickButton}
-            stateFilter={isOnlyShortFilm}
-            showButton={true}
-            movies={allFoundMovies}
-            keyWord={keyWordSearch}
-            changeMessage={setMessage}
-            message={message || NOTHING_FOUND}
-            onClickLike={props.onClickButtonLike}
-          ></MoviesCardList>:
-          <Preloader></Preloader>
-      }
+      {(props.answer) ? (
+        <MoviesCardList
+          onlyOwn={false}
+          isLiked={props.isLiked}
+          onClickButton={props.onClickButton}
+          stateFilter={isOnlyShortFilm}
+          showButton={true}
+          movies={allMovies}
+          keyWord={keyWordSearch}
+          changeMessage={setMessage}
+          message={message}
+          onClickLike={props.onClickButtonLike}
+        ></MoviesCardList>
+      ) : (
+        <Preloader></Preloader>
+      )}
     </main>
   );
 }

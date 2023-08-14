@@ -6,6 +6,7 @@ import Navigation from "../Navigation/Navigation.js";
 import ButtonEditProfile from "../EditProfileButton/ButtonEditProfile.js";
 
 function Header(props) {
+
   return (
     <header className="header">
       <Link to="/">
@@ -14,7 +15,7 @@ function Header(props) {
       {props.loggedIn && <Navigation place="header"></Navigation>}
       {props.loggedIn ? (
         <div className="header__buttons">
-          <ButtonEditProfile place="header"></ButtonEditProfile>
+          <ButtonEditProfile place="header" changeStateForm={props.changeStateForm}></ButtonEditProfile>
           <button
             className="header__burger button"
             onClick={props.openSideBar}

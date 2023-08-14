@@ -11,9 +11,7 @@ function SearchForm(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!props.onlyOwn) {
-      if (!localStorage.getItem("allFindMovies")) {
         props.getAllMovies();
-      }
       if (newWord) {
         localStorage.setItem("short", JSON.stringify(props.stateFilter));
         localStorage.setItem("keyWord", newWord);
@@ -24,7 +22,7 @@ function SearchForm(props) {
       props.getKeyWord(newWord);
     } else {
         props.changeMessage("");
-        props.getKeyWord(newWord); 
+        props.getKeyWord(newWord);
     }
   };
 

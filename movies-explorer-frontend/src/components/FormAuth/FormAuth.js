@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 
 function FormAuth(props) {
@@ -11,14 +11,18 @@ function FormAuth(props) {
 
   function handleChange(e) {
     props.onChange(e);
+    props.changeState("edit");
     const message = e.target.validationMessage;
     const key = e.target.name;
     setMessageError({ ...isMessageError, [key]: message });
   }
-  function checkValidity(e) {
-    const valid = e.target.form.checkValidity();
-    setIsValidForm(valid);
-  }
+  
+  const resetForm = useCallback(
+      (newIsValid = false) => {
+      setIsValidForm(newIsValid.target.form.checkValidity());
+    },
+    [setIsValidForm]
+  );
 
   return (
     <section className="auth" id={props.name}>
@@ -27,7 +31,7 @@ function FormAuth(props) {
         className="auth__form"
         name={props.name}
         onSubmit={props.onSubmit}
-        onChange={checkValidity}
+        onChange={resetForm}
         noValidate
       >
         <h2 className="auth__title">{props.title}</h2>
@@ -76,7 +80,7 @@ function FormAuth(props) {
           ></input>
           <span className="auth__error-message">{isMessageError.password}</span>
         </label>
-        <button
+        {props.stateForm === "edit" && ( <button
           className={
             isValidForm
               ? "auth__submit button"
@@ -87,7 +91,21 @@ function FormAuth(props) {
           disabled={!isValidForm}
         >
           {props.nameButton}
-        </button>
+        </button>)}
+        {props.stateForm === "error" && (
+          <span className="error-message">
+          {props.error}. Измените данные и попробуйте ещё раз.
+        </span>
+        )}
+        {props.stateForm === "error" && (
+          <button
+            className="auth__submit button button_disabled"
+            type="submit"
+            disabled={true}
+          >
+            {props.nameButton}
+          </button>
+        )}
         <div className="auth__switch-login">
           <p className="auth__sign-in">{props.message} &nbsp;</p>
           <Link

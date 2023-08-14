@@ -11,7 +11,8 @@ class Api {
       return res.json();
     }
     // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject(res.status);
+    // return Promise.reject(`${res.body.message}`);
   }
   // регистрация пользователя
   register(name, password, email) {
@@ -124,31 +125,6 @@ class Api {
     });
   }
 
-  // Постановка лайка: добавляем карточку в сохраненные addNewMovie
-  // putLike(movieId) {
-  //   return fetch(this._baseUrl + `/cards/${movieId}/likes`, {
-  //     credentials: 'include',
-  //     method: "PUT",
-  //   }).then((res) => {
-  //     return this._checkResult(res);
-  //   });
-  // }
-  // удаляем карточку из сохраненных delete
-  // takeOfLike(cardId) {
-  //   return fetch(this._baseUrl + `/cards/${cardId}/likes`, {
-  //     credentials: 'include',
-  //     method: "DELETE",
-  //   }).then((res) => {
-  //     return this._checkResult(res);
-  //   });
-  // }
-
-  // changeLikeCardStatus(cardId, newStateLike) {
-  //   if (newStateLike) {
-  //     return this.putLike(cardId);
-  //   } else {
-  //     return this.takeOfLike(cardId);
-  //   }
 }
 
 export const api = new Api({

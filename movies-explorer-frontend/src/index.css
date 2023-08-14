@@ -55,3 +55,6 @@ code {
 @import url(./components/MoviesCard/movies-card.css);
 @import url(./components/MoviesCardList/movies-card-list.css);
 @import url(./components/Message/message.css);
+
+/* tooltip */
+@import url(./components/Tooltip/tooltip.css);

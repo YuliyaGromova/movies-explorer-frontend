@@ -3,11 +3,9 @@ import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 // import movies from "../../utils/MoviesList";
-import { NOTHING_SAVED, NOTHING_FOUND } from "../../utils/message";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { NOTHING_SAVED } from "../../utils/message";
 
 function SavedMovies(props) {
-  const currentUser = React.useContext(CurrentUserContext);
   const [isOnlyShortFilm, setIsOnlyShortFilm] = React.useState(false);
   const [keyWordSearch, setKeyWordSearch] = React.useState("");
   const [message, setMessage] = React.useState("");
@@ -54,7 +52,7 @@ function SavedMovies(props) {
             movies={savedMovies}
             keyWord={keyWordSearch}
             changeMessage={setMessage}
-            message={message || NOTHING_FOUND}
+            message={message}
         ></MoviesCardList>
       ) : (
         <Preloader></Preloader>
