@@ -12,13 +12,17 @@ function FormAuth(props) {
   function handleChange(e) {
     props.onChange(e);
     props.changeState("edit");
-    const message = e.target.validationMessage;
     const key = e.target.name;
+    const message =
+      e.target.validationMessage === "Введите данные в указанном формате." &&
+      key === "name"
+        ? "Имя может содержать только латиницу, кириллицу, пробел или дефис"
+        : e.target.validationMessage;
     setMessageError({ ...isMessageError, [key]: message });
   }
-  
+
   const resetForm = useCallback(
-      (newIsValid = false) => {
+    (newIsValid = false) => {
       setIsValidForm(newIsValid.target.form.checkValidity());
     },
     [setIsValidForm]
@@ -46,6 +50,7 @@ function FormAuth(props) {
               name="name"
               value={props.nameUser}
               onChange={handleChange}
+              pattern="^[А-яЁёA-z\-\s]+"
               required
             ></input>
             <span className="auth__error-message">{isMessageError.name}</span>
@@ -80,22 +85,24 @@ function FormAuth(props) {
           ></input>
           <span className="auth__error-message">{isMessageError.password}</span>
         </label>
-        {props.stateForm === "edit" && ( <button
-          className={
-            isValidForm
-              ? "auth__submit button"
-              : "auth__submit button button_disabled"
-          }
-          type="submit"
-          name="saveUser"
-          disabled={!isValidForm}
-        >
-          {props.nameButton}
-        </button>)}
+        {props.stateForm === "edit" && (
+          <button
+            className={
+              isValidForm
+                ? "auth__submit button"
+                : "auth__submit button button_disabled"
+            }
+            type="submit"
+            name="saveUser"
+            disabled={!isValidForm}
+          >
+            {props.nameButton}
+          </button>
+        )}
         {props.stateForm === "error" && (
           <span className="error-message">
-          {props.error}. Измените данные и попробуйте ещё раз.
-        </span>
+            {props.error}. Измените данные и попробуйте ещё раз.
+          </span>
         )}
         {props.stateForm === "error" && (
           <button

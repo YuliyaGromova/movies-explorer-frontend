@@ -66,7 +66,7 @@ function MoviesCardList(props) {
 
   React.useEffect(() => {
     setIsShowButtonMore(movies.length > endSliceArray);
-    if (movies.length === 0) {props.changeMessage(NOTHING_FOUND)}
+    if (movies.length === 0 && props.movies) {props.changeMessage(NOTHING_FOUND)}
   }, [movies, endSliceArray]);
 
   React.useEffect(() => {

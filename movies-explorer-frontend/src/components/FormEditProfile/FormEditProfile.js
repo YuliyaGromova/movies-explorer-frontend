@@ -19,12 +19,14 @@ function FormEditProfile(props) {
     props.changeState("edit");
   }
 
-console.log(props.stateForm);
-
   function handleChangeName(e) {
     handleChangeStateEdit();
     props.setName(e.target.value);
-    setMessageError({ ...isMessageError, name: e.target.validationMessage });
+    const message =
+      e.target.validationMessage === "Введите данные в указанном формате."
+        ? "Имя может содержать только латиницу, кириллицу, пробел или дефис"
+        : e.target.validationMessage;
+    setMessageError({ ...isMessageError, name: message });
   }
 
   function handleChangeEmail(e) {
@@ -63,6 +65,7 @@ console.log(props.stateForm);
             onChange={handleChangeName}
             value={props.userName}
             disabled={props.stateForm === "read"}
+            pattern="^[А-яЁёA-z\-\s]+"
             required
           ></input>
           <span className="profile__error-message">{isMessageError.name}</span>

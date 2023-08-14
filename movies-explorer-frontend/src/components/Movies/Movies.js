@@ -4,7 +4,6 @@ import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import {
   FIRST_MESSAGE,
-  NOTHING_FOUND,
   ERROR_SEARCH,
 } from "../../utils/message";
 import moviesApi from "../../utils/MoviesApi.js";
