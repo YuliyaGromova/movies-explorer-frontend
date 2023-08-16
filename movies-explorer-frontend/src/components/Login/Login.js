@@ -1,19 +1,21 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import FormAuth from "../FormAuth/FormAuth";
 import mainApi from "../../utils/MainApi.js";
-// import getErrorMessage from "../../utils/error.js"
-import { LOGIN_ERROR, ENTER_SUCCESS  } from "../../utils/message";
+import { LOGIN_ERROR, ENTER_SUCCESS } from "../../utils/message";
 
 function Login(props) {
   const navigate = useNavigate();
 
-  const [formValue, setFormValue] = React.useState({
+  const [isRequest, setIsRequest] = useState(false);
+
+  const [formValue, setFormValue] = useState({
     email: "",
     password: "",
   });
 
-  const [errorMessage, setErrorMessage] = React.useState("")
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,12 +25,14 @@ function Login(props) {
       [name]: value,
     });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const { password, email } = formValue;
     if (!formValue.email || !formValue.password) {
       return;
     }
+    setIsRequest(true);
     mainApi
       .authorize(password, email)
       .then((data) => {
@@ -45,9 +49,11 @@ function Login(props) {
         console.log(err);
         props.changeStateForm("error");
         setErrorMessage(LOGIN_ERROR);
+      })
+      .finally(() => {
+        setIsRequest(false);
       });
   };
-
 
   const title = "Рады видеть!";
 
@@ -57,13 +63,13 @@ function Login(props) {
   function toggleFooter() {
     props.footer(false);
   }
-  React.useEffect(() => {
+  useEffect(() => {
     toggleHeader();
     toggleFooter();
     props.changeStateForm("edit");
   }, []);
 
-  return (
+  return !props.loggedIn ? (
     <FormAuth
       name="login"
       title={title}
@@ -76,7 +82,10 @@ function Login(props) {
       stateForm={props.stateForm}
       changeState={props.changeStateForm}
       error={errorMessage}
+      request={isRequest}
     ></FormAuth>
+  ) : (
+    <Navigate to="/" replace />
   );
 }
 

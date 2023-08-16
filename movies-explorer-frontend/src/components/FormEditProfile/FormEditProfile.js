@@ -1,23 +1,21 @@
-import React from "react";
+import { React, useRef, useState, useContext, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-
 function FormEditProfile(props) {
-  const nameRef=React.useRef();
-  const emailRef = React.useRef();
-  const currentUser = React.useContext(CurrentUserContext);
-  
+  const nameRef = useRef();
+  const emailRef = useRef();
+  const currentUser = useContext(CurrentUserContext);
 
-  const [isMessageError, setMessageError] = React.useState({
+  const [isMessageError, setMessageError] = useState({
     name: "",
     email: "",
   });
-  const [isValidForm, setIsValidForm] = React.useState(false); // при открытии окна редактирования профиля данные в полях равны тем что сохранены
+  const [isValidForm, setIsValidForm] = useState(false); // при открытии окна редактирования профиля данные в полях равны тем что сохранены
 
   const handleChangeStateEdit = () => {
     props.changeState("edit");
-  }
+  };
 
   function handleChangeName(e) {
     handleChangeStateEdit();
@@ -35,13 +33,16 @@ function FormEditProfile(props) {
     setMessageError({ ...isMessageError, email: e.target.validationMessage });
   }
 
-  const resetForm = React.useCallback(
+  const resetForm = useCallback(
     (newIsValid = false) => {
-    const state = newIsValid.target.form.checkValidity() && (currentUser.name !== nameRef.current.value || currentUser.email !== emailRef.current.value);
-    setIsValidForm(state);
-  },
-  [setIsValidForm, currentUser]
-);
+      const state =
+        newIsValid.target.form.checkValidity() &&
+        (currentUser.name !== nameRef.current.value ||
+          currentUser.email !== emailRef.current.value);
+      setIsValidForm(state);
+    },
+    [setIsValidForm, currentUser]
+  );
 
   return (
     <section className="profile">
@@ -64,7 +65,7 @@ function FormEditProfile(props) {
             name="name"
             onChange={handleChangeName}
             value={props.userName}
-            disabled={props.stateForm === "read"}
+            disabled={props.stateForm === "read" || !props.answer}
             pattern="^[А-яЁёA-z\-\s]+"
             required
           ></input>
@@ -81,26 +82,33 @@ function FormEditProfile(props) {
             name="email"
             onChange={handleChangeEmail}
             value={props.userEmail}
-            disabled={props.stateForm === "read"}
+            disabled={props.stateForm === "read" || !props.answer}
             required
           ></input>
           <span className="profile__error-message">{isMessageError.email}</span>
         </label>
         {props.stateForm === "read" && (
-          <button className="profile__edit-button link" onClick={handleChangeStateEdit}>
+          <button
+            className="profile__edit-button link"
+            onClick={handleChangeStateEdit}
+          >
             Редактировать
           </button>
         )}
         {props.stateForm === "read" && (
-          <Link to="/" className="profile__exit-button link" onClick={props.logOf}>
+          <Link
+            to="/"
+            className="profile__exit-button link"
+            onClick={props.logOf}
+          >
             Выйти из аккаунта
           </Link>
-        )} 
+        )}
         {/* не забыть функцию выхода */}
         {props.stateForm === "edit" && (
           <button
             className={
-              isValidForm
+              isValidForm && props.answer
                 ? "profile__submit-button button"
                 : "profile__submit-button button button_disabled"
             }
@@ -108,7 +116,7 @@ function FormEditProfile(props) {
             onSubmit={props.onSubmit}
             disabled={!isValidForm}
           >
-            Сохранить
+            {props.answer ? "Сохранить" : "Сохранение..."}
           </button>
         )}
         {props.stateForm === "error" && (

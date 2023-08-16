@@ -1,17 +1,19 @@
-import React from "react";
+import { React, useState } from "react";
 import iconSearch from "../../images/iconSearch.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { NOT_KEY_WORD } from "../../utils/message.js";
-// import moviesApi from "../../utils/MoviesApi.js";
 
 function SearchForm(props) {
   const keyWord = props.keyWord ? props.keyWord : "";
-  const [newWord, setNewWord] = React.useState(keyWord);
+  const [newWord, setNewWord] = useState(keyWord);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const moviesFromLocal = JSON.parse(localStorage.getItem("allFindMovies"));
     if (!props.onlyOwn) {
+      if (moviesFromLocal === null) {
         props.getAllMovies();
+      }
       if (newWord) {
         localStorage.setItem("short", JSON.stringify(props.stateFilter));
         localStorage.setItem("keyWord", newWord);
@@ -19,11 +21,9 @@ function SearchForm(props) {
       } else {
         props.changeMessage(NOT_KEY_WORD);
       }
-      props.getKeyWord(newWord);
-    } else {
-        props.changeMessage("");
-        props.getKeyWord(newWord);
     }
+    props.changeMessage("");
+    props.getKeyWord(newWord);
   };
 
   const handleChange = (event) => setNewWord(event.target.value);

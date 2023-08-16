@@ -1,10 +1,14 @@
-import React from "react";
+import { React, useState } from "react";
 
 function FilterCheckbox(props) {
   const stateFilterLocal = JSON.parse(localStorage.getItem("short"));
-  const defaultState = (!props.onlyOwn)? (stateFilterLocal !== null)? stateFilterLocal : false : false;
-  const [checked, setChecked] = React.useState(defaultState);
-const changeFilter = (e) => {
+  const defaultState = !props.onlyOwn
+    ? stateFilterLocal !== null
+      ? stateFilterLocal
+      : false
+    : false;
+  const [checked, setChecked] = useState(defaultState);
+  const changeFilter = (e) => {
     setChecked(!checked);
     props.filterShort(e.target.checked);
   };

@@ -39,7 +39,7 @@
 }
 
 .filter-checkbox__smalltumb:hover + .filter-checkbox__smalltumb_visible {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 600px) {

@@ -1,6 +1,7 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import FormAuth from "../FormAuth/FormAuth";
 import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import mainApi from "../../utils/MainApi.js";
 import getErrorMessage from "../../utils/error.js";
 import { ENTER_SUCCESS } from "../../utils/message.js";
@@ -8,9 +9,9 @@ import { ENTER_SUCCESS } from "../../utils/message.js";
 function Register(props) {
   const navigate = useNavigate();
 
-  const [errorMessage, setMessageError] = React.useState("");
-
-  const [formValue, setFormValue] = React.useState({
+  const [errorMessage, setMessageError] = useState("");
+  const [isRequest, setIsRequest] = useState(false);
+  const [formValue, setFormValue] = useState({
     name: "",
     email: "",
     password: "",
@@ -31,7 +32,7 @@ function Register(props) {
   function toggleFooter() {
     props.footer(false);
   }
-  React.useEffect(() => {
+  useEffect(() => {
     toggleHeader();
     toggleFooter();
     props.changeStateForm("edit");
@@ -40,6 +41,7 @@ function Register(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, password, email } = formValue;
+    setIsRequest(true);
     mainApi
       .register(name, password, email)
       .then(() => {
@@ -65,12 +67,14 @@ function Register(props) {
         console.log(err);
         props.changeStateForm("error");
         setMessageError(getErrorMessage(err));
+      })
+      .finally(() => {
+        setIsRequest(false);
       });
-    // .finally(() => props.isOpenMessage(true))
   };
 
   const title = "Добро пожаловать!";
-  return (
+  return !props.loggedIn ? (
     <FormAuth
       name="register"
       title={title}
@@ -82,7 +86,10 @@ function Register(props) {
       stateForm={props.stateForm}
       changeState={props.changeStateForm}
       error={errorMessage}
+      request={isRequest}
     ></FormAuth>
+  ) : (
+    <Navigate to="/" replace />
   );
 }
 

@@ -1,7 +1,6 @@
 import React from "react";
 
 function Tooltip(props) {
-    
   function closeTooltip() {
     props.closeTooltip(false);
   }

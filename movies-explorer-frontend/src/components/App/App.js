@@ -1,8 +1,6 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { React, useEffect, useState } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 import { Routes, Route } from "react-router-dom";
-// import myMovie from "../../utils/MoviesList";
 import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute.js";
 import NotFoundPage from "../NotFound/NotFoundPage.js";
 import Header from "../Header/Header.js";
@@ -23,26 +21,27 @@ import {
   ADD_MOVIE_FAIL,
   DELETE_SUCCESS,
   DELETE_FAIL,
+  ENTER_LINK,
   ENTER_SUCCESS,
 } from "../../utils/message.js";
 
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(false); // а залогинин ли пользователь
-  const [isOpenSideBar, setIsOpenSideBar] = React.useState(false); // открыт ли сайд бар
-  const [isShowHeader, setIsShowHeader] = React.useState(false); // нужно ли показать шапку
-  const [isShowFooter, setIsShowFooter] = React.useState(false); // нужно ли показать подвал
-  const [currentUser, setCurrentUser] = React.useState({}); // пользователь ( имя и почта)
-  const [ownMovies, setOwnMovies] = React.useState([]); // массив сохраненных фильмов
-  const [answer, setAnswer] = React.useState(true); // ожидание ответа от сервера (тру- ответа не ждем, фалсе - ждем ответа)
-  const [stateForm, setStateForm] = React.useState(""); // состояние формы (просмотр, редактирование, ошибка)
-  const [messageToUser, setMessageToUser] = React.useState("");
-  const [isOpenTooltip, setIsOpenTooltip] = React.useState(false);
+  const [loggedIn, setLoggedIn] = useState(false); // а залогинин ли пользователь
+  const [isOpenSideBar, setIsOpenSideBar] = useState(false); // открыт ли сайд бар
+  const [isShowHeader, setIsShowHeader] = useState(false); // нужно ли показать шапку
+  const [isShowFooter, setIsShowFooter] = useState(false); // нужно ли показать подвал
+  const [currentUser, setCurrentUser] = useState({}); // пользователь ( имя и почта)
+  const [ownMovies, setOwnMovies] = useState([]); // массив сохраненных фильмов
+  const [answer, setAnswer] = useState(true); // ожидание ответа от сервера (тру- ответа не ждем, фалсе - ждем ответа)
+  const [stateForm, setStateForm] = useState(""); // состояние формы (просмотр, редактирование, ошибка)
+  const [messageToUser, setMessageToUser] = useState("");
+  const [isOpenTooltip, setIsOpenTooltip] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     checkToken();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (loggedIn) {
       Promise.all([
         //в Promise.all передаем массив промисов которые нужно выполнить
@@ -52,6 +51,10 @@ function App() {
         .then(([dataUserInfo, dataOwnMovies]) => {
           setCurrentUser(dataUserInfo);
           setOwnMovies(dataOwnMovies);
+          if (messageToUser !== ENTER_SUCCESS) {
+            setMessageToUser(ENTER_LINK);
+            openTooltip();
+          }
         })
         .catch((err) => {
           //попадаем сюда если один из промисов завершаться ошибкой
@@ -69,8 +72,6 @@ function App() {
         mainApi.getContent().then((res) => {
           if (res) {
             setLoggedIn(true);
-            setMessageToUser(ENTER_SUCCESS);
-            openTooltip();
           }
         });
       }
@@ -83,7 +84,9 @@ function App() {
 
   function openTooltip() {
     setIsOpenTooltip(true);
-    setTimeout(()=> {setIsOpenTooltip(false);}, 2000)
+    setTimeout(() => {
+      setIsOpenTooltip(false);
+    }, 2000);
   }
 
   // сайд бар открыт
@@ -108,6 +111,7 @@ function App() {
 
   // профиль - следующий этап
   function handleUpdateUser(data) {
+    setAnswer(false);
     mainApi
       .editUserInfo(data)
       .then((res) => {
@@ -118,7 +122,8 @@ function App() {
       .catch((err) => {
         console.log(err);
         setStateForm("error");
-      });
+      })
+      .finally(() => setAnswer(true));
   }
 
   // проверяем есть ли фильм в сохраненных (если есть то красим сердечко)
@@ -234,6 +239,7 @@ function App() {
                 loggedIn={loggedIn}
                 stateForm={stateForm}
                 changeStateForm={setStateForm}
+                answer={answer}
               />
             }
           />
@@ -248,6 +254,7 @@ function App() {
                 changeStateForm={setStateForm}
                 setMessageToUser={setMessageToUser}
                 openTooltip={openTooltip}
+                loggedIn={loggedIn}
               />
             }
           />
@@ -262,6 +269,7 @@ function App() {
                 changeStateForm={setStateForm}
                 openTooltip={openTooltip}
                 setMessageToUser={setMessageToUser}
+                loggedIn={loggedIn}
               />
             }
           />
@@ -276,7 +284,12 @@ function App() {
 
       {isShowFooter && <Footer></Footer>}
       {isOpenSideBar && <SideBar closeSideBar={closeSideBar}></SideBar>}
-      {isOpenTooltip && <Tooltip closeTooltip={setIsOpenTooltip} message={messageToUser}></Tooltip>}
+      {isOpenTooltip && (
+        <Tooltip
+          closeTooltip={setIsOpenTooltip}
+          message={messageToUser}
+        ></Tooltip>
+      )}
     </div>
   );
 }

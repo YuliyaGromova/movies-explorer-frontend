@@ -1,12 +1,13 @@
 import React from "react";
 
-
 function MoviesCard(props) {
   const movie = props.movie;
   const onlyOwn = props.onlyOwn; //для страницы сохраненных фильмов
-  
+
   const duration = convertMinInHour();
-  const image = (onlyOwn)? movie.image: `https://api.nomoreparties.co` + movie.image.url;
+  const image = onlyOwn
+    ? movie.image
+    : `https://api.nomoreparties.co` + movie.image.url;
 
   function convertMinInHour() {
     const hours = Math.floor(movie.duration / 60);
@@ -21,10 +22,15 @@ function MoviesCard(props) {
 
   return (
     <li className="movies-card">
-      <a href={movie.trailerLink} target="_blank" className="link" rel="noreferrer">
-        <div 
-        className="movies-card__poster"
-        style={{ backgroundImage: `url(${image})` }}
+      <a
+        href={movie.trailerLink}
+        target="_blank"
+        className="link"
+        rel="noreferrer"
+      >
+        <div
+          className="movies-card__poster"
+          style={{ backgroundImage: `url(${image})` }}
         ></div>
       </a>
       <div className="movies-card__info">

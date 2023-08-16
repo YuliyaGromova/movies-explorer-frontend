@@ -15,7 +15,11 @@ function Portfolio() {
             rel="noopener noreferrer"
           >
             <p className="portfolio__name-link">Статичный сайт</p>
-            <img className="portfolio__link-to-project button" src={link} alt="стрелка" />
+            <img
+              className="portfolio__link-to-project button"
+              src={link}
+              alt="стрелка"
+            />
           </a>
         </li>
         <li className="portfolio__item">
@@ -26,7 +30,11 @@ function Portfolio() {
             rel="noopener noreferrer"
           >
             <p className="portfolio__name-link">Адаптивный сайт</p>
-            <img className="portfolio__link-to-project button" src={link} alt="стрелка" />
+            <img
+              className="portfolio__link-to-project button"
+              src={link}
+              alt="стрелка"
+            />
           </a>
         </li>
         <li className="portfolio__item">
@@ -37,7 +45,11 @@ function Portfolio() {
             rel="noopener noreferrer"
           >
             <p className="portfolio__name-link">Одностраничное приложение</p>
-            <img className="portfolio__link-to-project button" src={link} alt="стрелка" />
+            <img
+              className="portfolio__link-to-project button"
+              src={link}
+              alt="стрелка"
+            />
           </a>
         </li>
       </ul>

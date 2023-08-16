@@ -12,7 +12,6 @@ class Api {
     }
     // если ошибка, отклоняем промис
     return Promise.reject(res.status);
-    // return Promise.reject(`${res.body.message}`);
   }
   // регистрация пользователя
   register(name, password, email) {
@@ -46,14 +45,14 @@ class Api {
   getContent() {
     return fetch(`${this._baseUrl}/users/me`, {
       credentials: "include",
-      method: 'GET',   
+      method: "GET",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
     })
-    .then(res => res.json())
-    .then(data => data)
+      .then((res) => res.json())
+      .then((data) => data);
   }
 
   // Загрузка информации о пользователе с сервера
@@ -103,9 +102,9 @@ class Api {
         duration: data.duration,
         year: data.year,
         description: data.description,
-        image: this._baseMovieUrl+data.image.url,
+        image: this._baseMovieUrl + data.image.url,
         trailerLink: data.trailerLink,
-        thumbnail: this._baseMovieUrl+data.image.formats.thumbnail.url,
+        thumbnail: this._baseMovieUrl + data.image.formats.thumbnail.url,
         movieId: data.id,
         nameRU: data.nameRU,
         nameEN: data.nameEN,
@@ -124,7 +123,6 @@ class Api {
       return this._checkResult(res);
     });
   }
-
 }
 
 export const api = new Api({

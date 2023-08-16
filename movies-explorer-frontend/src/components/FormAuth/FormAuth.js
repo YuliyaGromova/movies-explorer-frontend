@@ -1,13 +1,13 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 
 function FormAuth(props) {
-  const [isMessageError, setMessageError] = React.useState({
+  const [isMessageError, setMessageError] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const [isValidForm, setIsValidForm] = React.useState(false);
+  const [isValidForm, setIsValidForm] = useState(false);
 
   function handleChange(e) {
     props.onChange(e);
@@ -51,6 +51,7 @@ function FormAuth(props) {
               value={props.nameUser}
               onChange={handleChange}
               pattern="^[А-яЁёA-z\-\s]+"
+              disabled={props.request}
               required
             ></input>
             <span className="auth__error-message">{isMessageError.name}</span>
@@ -66,6 +67,7 @@ function FormAuth(props) {
             name="email"
             onChange={handleChange}
             value={props.email}
+            disabled={props.request}
             required
           ></input>
           <span className="auth__error-message">{isMessageError.email}</span>
@@ -81,6 +83,7 @@ function FormAuth(props) {
             autoComplete="on"
             onChange={handleChange}
             value={props.password}
+            disabled={props.request}
             required
           ></input>
           <span className="auth__error-message">{isMessageError.password}</span>
@@ -88,15 +91,15 @@ function FormAuth(props) {
         {props.stateForm === "edit" && (
           <button
             className={
-              isValidForm
+              isValidForm && !props.request
                 ? "auth__submit button"
                 : "auth__submit button button_disabled"
             }
             type="submit"
             name="saveUser"
-            disabled={!isValidForm}
+            disabled={!isValidForm && props.request}
           >
-            {props.nameButton}
+            {props.request ? "Сохранение... " : props.nameButton}
           </button>
         )}
         {props.stateForm === "error" && (

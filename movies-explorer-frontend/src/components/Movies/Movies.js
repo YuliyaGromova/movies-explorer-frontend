@@ -1,28 +1,25 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import {
-  FIRST_MESSAGE,
-  ERROR_SEARCH,
-} from "../../utils/message";
+import { FIRST_MESSAGE, ERROR_SEARCH } from "../../utils/message";
 import moviesApi from "../../utils/MoviesApi.js";
 
 function Movies(props) {
-  const [isOnlyShortFilm, setIsOnlyShortFilm] = React.useState(false); // сотсояние чекбокса фильтрующих короткометражки
-  const [message, setMessage] = React.useState("");
-  const [keyWordSearch, setKeyWordSearch] = React.useState(localStorage.getItem("keyWord"));
-  
-  const [allMovies, setAllMovies] = React.useState(JSON.parse(localStorage.getItem("allFindMovies"))); //фильмы полученные в результате запроса и внешнего сервера (не фильтрованные)
-  // const [allMovies, setAllMovies] = React.useState(null); //фильмы полученные в результате запроса и внешнего сервера (не фильтрованные)
-  // const localMovie = JSON.parse(localStorage.getItem("allFindMovies"));
+  const [isOnlyShortFilm, setIsOnlyShortFilm] = useState(false); // сотсояние чекбокса фильтрующих короткометражки
+  const [message, setMessage] = useState("");
+  const [keyWordSearch, setKeyWordSearch] = useState(
+    localStorage.getItem("keyWord")
+  );
+
+  const localMovies = JSON.parse(localStorage.getItem("allFindMovies"));
+
   function setFoundMovies() {
     props.setAnswer(false);
     moviesApi
       .getMovies()
       .then((res) => {
-        // localStorage.setItem("allFindMovies", JSON.stringify(res));
-        setAllMovies(res);
+        localStorage.setItem("allFindMovies", JSON.stringify(res));
       })
       .catch(() => setMessage(ERROR_SEARCH))
       .finally(() => {
@@ -30,7 +27,7 @@ function Movies(props) {
       });
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     toggleHeader();
     toggleFooter();
 
@@ -39,12 +36,10 @@ function Movies(props) {
     const movies = JSON.parse(localStorage.getItem("allFindMovies"));
     if (movies == null) {
       setMessage(FIRST_MESSAGE);
-      // setKeyWordSearch(null);
       setIsOnlyShortFilm(false);
       localStorage.removeItem("keyWord");
       localStorage.removeItem("short");
       setKeyWordSearch(null);
-      // setFoundMovies();
     } else {
       if (word == null) {
         setKeyWordSearch(null);
@@ -56,18 +51,15 @@ function Movies(props) {
       }
     }
   }, []); // эффект срабатывает только один раз - при самом первом рендеринге
-  React.useEffect(() => {
-  }, [keyWordSearch, isOnlyShortFilm]);
+
+  useEffect(() => {}, [keyWordSearch, isOnlyShortFilm]);
 
   function toggleHeader() {
     props.header(true);
   }
   function toggleFooter() {
     props.footer(true);
-
   }
-
-  // console.log(`width: ${width}px, isScreenS: ${String(isScreenS)}, isScreenM: ${String(isScreenM)}, isScreenL: ${String(isScreenL)}`);
 
   return (
     <main className="content">
@@ -80,14 +72,14 @@ function Movies(props) {
         stateFilter={isOnlyShortFilm}
         getAllMovies={setFoundMovies} // запрос на получение массива извне
       ></SearchForm>
-      {(props.answer) ? (
+      {props.answer ? (
         <MoviesCardList
           onlyOwn={false}
           isLiked={props.isLiked}
           onClickButton={props.onClickButton}
           stateFilter={isOnlyShortFilm}
           showButton={true}
-          movies={allMovies}
+          movies={localMovies}
           keyWord={keyWordSearch}
           changeMessage={setMessage}
           message={message}
