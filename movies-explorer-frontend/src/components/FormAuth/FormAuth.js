@@ -52,6 +52,8 @@ function FormAuth(props) {
               onChange={handleChange}
               pattern="^[А-яЁёA-z\-\s]+"
               disabled={props.request}
+              minLength="2"
+              maxLength="30"
               required
             ></input>
             <span className="auth__error-message">{isMessageError.name}</span>

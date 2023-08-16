@@ -67,6 +67,8 @@ function FormEditProfile(props) {
             value={props.userName}
             disabled={props.stateForm === "read" || !props.answer}
             pattern="^[А-яЁёA-z\-\s]+"
+            minLength="2"
+            maxLength="30"
             required
           ></input>
           <span className="profile__error-message">{isMessageError.name}</span>
