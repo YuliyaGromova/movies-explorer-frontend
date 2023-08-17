@@ -43,6 +43,7 @@ function MoviesCardList(props) {
         movie={item}
         onClick={props.onClickLike}
         myCard={props.isLiked}
+        requestLike={props.requestLike}
       ></MoviesCard>
     ));
 

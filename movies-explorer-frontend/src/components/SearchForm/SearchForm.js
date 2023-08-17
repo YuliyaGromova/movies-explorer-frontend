@@ -41,7 +41,7 @@ function SearchForm(props) {
           value={newWord}
           onChange={handleChange}
         ></input>
-        <button className="search-form__find button" type="submit"></button>
+        <button className="search-form__find button" type="submit" disabled={!props.answer}></button>
         <FilterCheckbox
           onlyOwn={props.onlyOwn}
           nameFilter="Короткометражки"

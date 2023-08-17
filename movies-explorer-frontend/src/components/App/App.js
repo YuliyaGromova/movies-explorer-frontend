@@ -38,6 +38,7 @@ function App() {
   const [stateForm, setStateForm] = useState(""); // состояние формы (просмотр, редактирование, ошибка)
   const [messageToUser, setMessageToUser] = useState("");
   const [isOpenTooltip, setIsOpenTooltip] = useState(false);
+  const [requestLike, setRequestLike] = useState(true); // true - не ждем ответа
 
   function LogOf() {
     setLoggedIn(false);
@@ -167,6 +168,7 @@ function App() {
       ownMovies.find((item) => item.movieId === movie.id) || {};
     // Отправляем запрос в API и получаем обновлённые данные карточки
     if (!isLiked) {
+      setRequestLike(false);
       mainApi
         .addNewMovie(movie)
         .then((newMovie) => {
@@ -184,13 +186,15 @@ function App() {
             setMessageToUser(ADD_MOVIE_FAIL);
           openTooltip();
           }
-        });
+        })
+        .finally(()=> setRequestLike(true))
     } else {
       handleMovieDelete(savedMovie);
     }
   }
 
   function handleMovieDelete(movie) {
+    setRequestLike(false);
     mainApi
       .deleteMoviesApi(movie._id)
       .then(() => {
@@ -208,7 +212,8 @@ function App() {
           setMessageToUser(DELETE_FAIL);
           openTooltip();
         }
-      });
+      })
+      .finally(()=> setRequestLike(true));
   }
 
   return (
@@ -241,6 +246,7 @@ function App() {
                 openTooltip={openTooltip}
                 onClickButtonLike={handleMovieLike}
                 loggedIn={loggedIn}
+                requestLike={requestLike}
               />
             }
           />
@@ -261,6 +267,7 @@ function App() {
                 loggedIn={loggedIn}
                 setMessageToUser={setMessageToUser}
                 openTooltip={openTooltip}
+                requestLike={requestLike}
               />
             }
           />

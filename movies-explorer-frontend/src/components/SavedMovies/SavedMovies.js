@@ -35,6 +35,7 @@ function SavedMovies(props) {
         changeMessage={setMessage}
         stateFilter={isOnlyShortFilm}
         onlyOwn={true}
+        answer={true}
       ></SearchForm>
       {props.answer ? (
         <MoviesCardList
@@ -48,6 +49,7 @@ function SavedMovies(props) {
           keyWord={keyWordSearch}
           changeMessage={setMessage}
           message={message}
+          requestLike={props.requestLike}
         ></MoviesCardList>
       ) : (
         <Preloader></Preloader>

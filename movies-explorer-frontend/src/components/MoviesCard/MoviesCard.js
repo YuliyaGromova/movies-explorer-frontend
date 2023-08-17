@@ -17,6 +17,7 @@ function MoviesCard(props) {
 
   const isLiked = props.myCard(movie);
   function saveMovie() {
+    console.log(props.requestLike);
     props.onClick(movie);
   }
 
@@ -44,6 +45,7 @@ function MoviesCard(props) {
               : "movies-card__like movies-card__like_state_dislike button"
           }
           onClick={saveMovie}
+          disabled={!props.requestLike}
         ></button>
       </div>
       <p className="movies-card__duration">{duration}</p>

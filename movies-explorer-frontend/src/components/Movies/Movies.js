@@ -71,6 +71,7 @@ function Movies(props) {
         keyWord={keyWordSearch}
         changeMessage={setMessage}
         stateFilter={isOnlyShortFilm}
+        answer={props.answer}
         getAllMovies={setFoundMovies} // запрос на получение массива извне
       ></SearchForm>
       {props.answer ? (
@@ -85,6 +86,7 @@ function Movies(props) {
           changeMessage={setMessage}
           message={message}
           onClickLike={props.onClickButtonLike}
+          requestLike={props.requestLike}
         ></MoviesCardList>
       ) : (
         <Preloader></Preloader>
