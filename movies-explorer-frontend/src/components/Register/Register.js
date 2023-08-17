@@ -89,7 +89,7 @@ function Register(props) {
       request={isRequest}
     ></FormAuth>
   ) : (
-    <Navigate to="/" replace />
+    <Navigate to="/movies" replace />
   );
 }
 

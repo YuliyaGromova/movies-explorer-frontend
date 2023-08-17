@@ -11,6 +11,7 @@ function FilterCheckbox(props) {
   const changeFilter = (e) => {
     setChecked(!checked);
     props.filterShort(e.target.checked);
+    if (!props.onlyOwn) {localStorage.setItem("short", JSON.stringify(e.target.checked))};
   };
 
   return (

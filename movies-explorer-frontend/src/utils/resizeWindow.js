@@ -1,8 +1,5 @@
 import React from "react";
-
-export const SCREEN_S = 320;
-export const SCREEN_M = 600;
-export const SCREEN_L = 900;
+import {SCREEN_S, SCREEN_M, SCREEN_L} from "../utils/config.js"
 
 export const useResize = () => {
   const [width, setWidth] = React.useState(window.innerWidth);

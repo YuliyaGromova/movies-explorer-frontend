@@ -30,7 +30,11 @@ function FormEditProfile(props) {
   function handleChangeEmail(e) {
     handleChangeStateEdit();
     props.setEmail(e.target.value);
-    setMessageError({ ...isMessageError, email: e.target.validationMessage });
+    const message =
+      e.target.validationMessage === "Введите данные в указанном формате."
+        ? "email должен содержать локальная часть, символ '@', точка и доменное имя. "
+        : e.target.validationMessage;
+    setMessageError({ ...isMessageError, email: message });
   }
 
   const resetForm = useCallback(
@@ -85,6 +89,7 @@ function FormEditProfile(props) {
             onChange={handleChangeEmail}
             value={props.userEmail}
             disabled={props.stateForm === "read" || !props.answer}
+            pattern="^[^ ]+@[^ ]+\.[a-z]{2,4}$"
             required
           ></input>
           <span className="profile__error-message">{isMessageError.email}</span>

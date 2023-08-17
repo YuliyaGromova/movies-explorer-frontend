@@ -1,3 +1,5 @@
+import { DURATION_SHORT_MOVIE } from "./config.js";
+
 function filterMovies(arr, onlyOwn, keyWord, stateFilter) {
   const moviesFilterWord = arr
     ? !keyWord
@@ -14,7 +16,7 @@ function filterMovies(arr, onlyOwn, keyWord, stateFilter) {
 
   const movies = stateFilter
     ? moviesFilterWord.filter(function (item) {
-        return item.duration < 40;
+        return item.duration <= DURATION_SHORT_MOVIE;
       })
     : moviesFilterWord;
   return movies;

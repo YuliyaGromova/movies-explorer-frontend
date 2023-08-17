@@ -26,10 +26,11 @@ function Movies(props) {
         props.setAnswer(true);
       });
   }
-
+  
   useEffect(() => {
     toggleHeader();
     toggleFooter();
+
 
     const word = localStorage.getItem("keyWord");
     const short = JSON.parse(localStorage.getItem("short"));

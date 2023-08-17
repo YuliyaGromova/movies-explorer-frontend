@@ -9,21 +9,24 @@ function SearchForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const moviesFromLocal = JSON.parse(localStorage.getItem("allFindMovies"));
-    if (!props.onlyOwn) {
-      if (moviesFromLocal === null) {
-        props.getAllMovies();
+    if (newWord) {
+      const moviesFromLocal = JSON.parse(localStorage.getItem("allFindMovies"));
+      if (!props.onlyOwn) {
+        if (moviesFromLocal === null) {
+          props.getAllMovies();
+        }
+        if (newWord) {
+          // localStorage.setItem("short", JSON.stringify(props.stateFilter));
+          localStorage.setItem("keyWord", newWord);
+          props.changeMessage("");
+        } 
       }
-      if (newWord) {
-        localStorage.setItem("short", JSON.stringify(props.stateFilter));
-        localStorage.setItem("keyWord", newWord);
-        props.changeMessage("");
-      } else {
-        props.changeMessage(NOT_KEY_WORD);
-      }
+      props.changeMessage("");
+      props.getKeyWord(newWord);
+    } else {
+      props.changeMessage(NOT_KEY_WORD);
+      props.getKeyWord(newWord);
     }
-    props.changeMessage("");
-    props.getKeyWord(newWord);
   };
 
   const handleChange = (event) => setNewWord(event.target.value);

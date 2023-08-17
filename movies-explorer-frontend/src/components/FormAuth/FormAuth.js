@@ -70,6 +70,7 @@ function FormAuth(props) {
             onChange={handleChange}
             value={props.email}
             disabled={props.request}
+            pattern="^[^ ]+@[^ ]+\.[a-z]{2,4}$"
             required
           ></input>
           <span className="auth__error-message">{isMessageError.email}</span>

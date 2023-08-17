@@ -23,10 +23,12 @@ import {
   DELETE_FAIL,
   ENTER_LINK,
   ENTER_SUCCESS,
+  LOGIN_SERVER_ERROR,
 } from "../../utils/message.js";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false); // а залогинин ли пользователь
+  const defaultLoggedIn = localStorage.getItem("token") ? true : false;
+  const [loggedIn, setLoggedIn] = useState(defaultLoggedIn); // а залогинин ли пользователь
   const [isOpenSideBar, setIsOpenSideBar] = useState(false); // открыт ли сайд бар
   const [isShowHeader, setIsShowHeader] = useState(false); // нужно ли показать шапку
   const [isShowFooter, setIsShowFooter] = useState(false); // нужно ли показать подвал
@@ -36,6 +38,11 @@ function App() {
   const [stateForm, setStateForm] = useState(""); // состояние формы (просмотр, редактирование, ошибка)
   const [messageToUser, setMessageToUser] = useState("");
   const [isOpenTooltip, setIsOpenTooltip] = useState(false);
+
+  function LogOf() {
+    setLoggedIn(false);
+    localStorage.clear();
+  }
 
   useEffect(() => {
     checkToken();
@@ -59,8 +66,11 @@ function App() {
         .catch((err) => {
           //попадаем сюда если один из промисов завершаться ошибкой
           console.log(err);
-          setMessageToUser(SERVER_ERROR);
+          err === 401
+            ? setMessageToUser(LOGIN_SERVER_ERROR)
+            : setMessageToUser(SERVER_ERROR);
           openTooltip();
+          LogOf();
         });
     }
   }, [loggedIn]);
@@ -69,11 +79,22 @@ function App() {
     if (localStorage.getItem("token")) {
       const token = localStorage.getItem("token");
       if (token) {
-        mainApi.getContent().then((res) => {
-          if (res) {
-            setLoggedIn(true);
-          }
-        });
+        mainApi
+          .getContent()
+          .then((res) => {
+            if (res) {
+              setLoggedIn(true);
+            }
+          })
+          .catch((err) => {
+            //попадаем сюда если один из промисов завершаться ошибкой
+            console.log(err);
+            err === 401
+              ? setMessageToUser(LOGIN_SERVER_ERROR)
+              : setMessageToUser(SERVER_ERROR);
+            openTooltip();
+            LogOf();
+          });
       }
     }
   };
@@ -122,6 +143,11 @@ function App() {
       .catch((err) => {
         console.log(err);
         setStateForm("error");
+        err === 401
+          ? setMessageToUser(LOGIN_SERVER_ERROR)
+          : setMessageToUser(SERVER_ERROR);
+        openTooltip();
+        LogOf();
       })
       .finally(() => setAnswer(true));
   }
@@ -150,8 +176,14 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
-          setMessageToUser(ADD_MOVIE_FAIL);
+          if (err === 401) {
+            setMessageToUser(LOGIN_SERVER_ERROR);
+            openTooltip();
+            LogOf();
+          } else {
+            setMessageToUser(ADD_MOVIE_FAIL);
           openTooltip();
+          }
         });
     } else {
       handleMovieDelete(savedMovie);
@@ -168,14 +200,15 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setMessageToUser(DELETE_FAIL);
-        openTooltip();
+        if (err === 401) {
+          setMessageToUser(LOGIN_SERVER_ERROR);
+          openTooltip();
+          LogOf();
+        } else {
+          setMessageToUser(DELETE_FAIL);
+          openTooltip();
+        }
       });
-  }
-
-  function LogOf() {
-    setLoggedIn(false);
-    localStorage.clear();
   }
 
   return (
@@ -204,6 +237,8 @@ function App() {
                 header={toggleHeader}
                 footer={toggleFooter}
                 isLiked={isMovieLike}
+                setMessageToUser={setMessageToUser}
+                openTooltip={openTooltip}
                 onClickButtonLike={handleMovieLike}
                 loggedIn={loggedIn}
               />
@@ -224,6 +259,8 @@ function App() {
                 onClickButtonLike={handleMovieDelete}
                 movies={ownMovies}
                 loggedIn={loggedIn}
+                setMessageToUser={setMessageToUser}
+                openTooltip={openTooltip}
               />
             }
           />
@@ -240,6 +277,8 @@ function App() {
                 stateForm={stateForm}
                 changeStateForm={setStateForm}
                 answer={answer}
+                setMessageToUser={setMessageToUser}
+                openTooltip={openTooltip}
               />
             }
           />
