@@ -17,7 +17,6 @@ function MoviesCard(props) {
 
   const isLiked = props.myCard(movie);
   function saveMovie() {
-    console.log(props.requestLike);
     props.onClick(movie);
   }
 

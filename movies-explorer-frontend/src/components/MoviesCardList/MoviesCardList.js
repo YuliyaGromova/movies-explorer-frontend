@@ -51,8 +51,6 @@ function MoviesCardList(props) {
       ></MoviesCard>
     ));
 
-  console.log(moviesList);
-
   useEffect(() => {
     isScreenS && setEndSliceArray(END_SLICE_ARR_SIZE_S);
     isScreenM && setEndSliceArray(END_SLICE_ARR_SIZE_M);
