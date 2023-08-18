@@ -33,19 +33,25 @@ function MoviesCardList(props) {
   const [isShowButtonMore, setIsShowButtonMore] = useState(
     sliceMovies.length > endSliceArray
   );
+  
+  function getKey(movie) {
+    return onlyOwn? movie.movieId : movie.id ;
+  }
 
   const moviesList =
     sliceMovies.length &&
     sliceMovies.map((item, i) => (
       <MoviesCard
         onlyOwn={onlyOwn}
-        key={Math.floor(Math.random() * i * 1000)}
+        key={getKey(item)}
         movie={item}
         onClick={props.onClickLike}
         myCard={props.isLiked}
         requestLike={props.requestLike}
       ></MoviesCard>
     ));
+
+  console.log(moviesList);
 
   useEffect(() => {
     isScreenS && setEndSliceArray(END_SLICE_ARR_SIZE_S);
