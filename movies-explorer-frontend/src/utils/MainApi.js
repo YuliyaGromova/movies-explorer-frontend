@@ -126,8 +126,8 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "https://api.gromova.students.nomoreparties.sbs",
-  // baseUrl: "http://localhost:3000",
+  // baseUrl: "https://api.gromova.students.nomoreparties.sbs",
+  baseUrl: "http://localhost:3000",
   baseMovieUrl: "https://api.nomoreparties.co",
   headers: {
     "Content-Type": "application/json",

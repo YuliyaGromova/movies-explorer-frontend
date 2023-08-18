@@ -75,7 +75,7 @@ function FormEditProfile(props) {
             maxLength="30"
             required
           ></input>
-          <span className="profile__error-message">{isMessageError.name}</span>
+          <span className="profile__error-message">{(props.stateForm === "edit")? isMessageError.name: ""}</span>
         </label>
         <label className="profile__label">
           E&#8209;mail
@@ -92,7 +92,7 @@ function FormEditProfile(props) {
             pattern="^[^ ]+@[^ ]+\.[a-z]{2,4}$"
             required
           ></input>
-          <span className="profile__error-message">{isMessageError.email}</span>
+          <span className="profile__error-message">{(props.stateForm === "edit")? isMessageError.email: ""}</span>
         </label>
         {props.stateForm === "read" && (
           <button
