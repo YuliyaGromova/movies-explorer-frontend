@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -9,7 +9,7 @@ function NotFoundPage(props) {
   function toogleFooter() {
     props.footer(false);
   }
-  React.useEffect(() => {
+  useEffect(() => {
     toogleHeader();
     toogleFooter();
   }, []);

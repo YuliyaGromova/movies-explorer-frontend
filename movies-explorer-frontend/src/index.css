@@ -1,17 +1,3 @@
-/* body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
-
 @import url(./vendor/normalize.css);
 
 @import url(./vendor/fonts.css);
@@ -54,3 +40,7 @@ code {
 @import url(./components/SearchForm/search-form.css);
 @import url(./components/MoviesCard/movies-card.css);
 @import url(./components/MoviesCardList/movies-card-list.css);
+@import url(./components/Message/message.css);
+
+/* tooltip */
+@import url(./components/Tooltip/tooltip.css);

@@ -5,6 +5,9 @@ function MoviesCard(props) {
   const onlyOwn = props.onlyOwn; //для страницы сохраненных фильмов
 
   const duration = convertMinInHour();
+  const image = onlyOwn
+    ? movie.image
+    : `https://api.nomoreparties.co` + movie.image.url;
 
   function convertMinInHour() {
     const hours = Math.floor(movie.duration / 60);
@@ -13,14 +16,25 @@ function MoviesCard(props) {
   }
 
   const isLiked = props.myCard(movie);
+  function saveMovie() {
+    props.onClick(movie);
+  }
+
   return (
     <li className="movies-card">
-      <div
-        className="movies-card__poster link"
-        style={{ backgroundImage: `url(${movie.image})` }}
-      ></div>
+      <a
+        href={movie.trailerLink}
+        target="_blank"
+        className="link"
+        rel="noreferrer"
+      >
+        <div
+          className="movies-card__poster"
+          style={{ backgroundImage: `url(${image})` }}
+        ></div>
+      </a>
       <div className="movies-card__info">
-        <p className="movies-card__name">{movie.nameRu}</p>
+        <p className="movies-card__name">{movie.nameRU}</p>
         <button
           className={
             onlyOwn
@@ -29,7 +43,8 @@ function MoviesCard(props) {
               ? "movies-card__like movies-card__like_state_like button"
               : "movies-card__like movies-card__like_state_dislike button"
           }
-          onClick={props.onClick}
+          onClick={saveMovie}
+          disabled={!props.requestLike}
         ></button>
       </div>
       <p className="movies-card__duration">{duration}</p>

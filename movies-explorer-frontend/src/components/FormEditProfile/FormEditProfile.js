@@ -1,58 +1,52 @@
-import React from "react";
+import { React, useRef, useState, useContext, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function FormEditProfile(props) {
-  function toggleHeader() {
-    props.header(true);
-  }
-  function toggleFooter() {
-    props.footer(false);
-  }
-  const [name, setName] = React.useState("Юленька"); // потом в скобках будет пусто
-  const [email, setEmail] = React.useState("chervyak_9@mail.ru"); // потом в скобках будет пусто
-  const [stateForm, setStateForm] = React.useState(""); // состояние формы (просмотр, редактирование, ошибка)
-  const [isMessageError, setMessageError] = React.useState({
+  const nameRef = useRef();
+  const emailRef = useRef();
+  const currentUser = useContext(CurrentUserContext);
+
+  const [isMessageError, setMessageError] = useState({
     name: "",
     email: "",
   });
-  const [isValidForm, setIsValidForm] = React.useState(true); // при открытии окна редактирования профиля подгружаются нормальные данные (должны по крайней мере)
-  // const currentUser = React.useContext(CurrentUserContext);
-  React.useEffect(() => {
-    toggleFooter();
-    toggleHeader();
-    setName(name); //потом будет currentUser.name
-    setEmail(email); //потом будет currentUser.email
-    setStateForm("read"); // тут можно менять состояние (read, edit, error)
-  }, []);
+  const [isValidForm, setIsValidForm] = useState(false); // при открытии окна редактирования профиля данные в полях равны тем что сохранены
 
-  function handleSubmit(e) {
-    // Запрещаем браузеру переходить по адресу формы
-    e.preventDefault();
-    // Передаём значения управляемых компонентов во внешний обработчик
-    // props.onUpdateUser({
-    //   name,
-    //   email,
-    // });
-  }
-
-  function handleChangeStateEdit(e) {
-    e.preventDefault();
-    setStateForm("edit");
-  }
+  const handleChangeStateEdit = () => {
+    props.changeState("edit");
+  };
 
   function handleChangeName(e) {
-    setName(e.target.value);
-    setMessageError({ ...isMessageError, name: e.target.validationMessage });
-  }
-  function handleChangeEmail(e) {
-    setEmail(e.target.value);
-    setMessageError({ ...isMessageError, email: e.target.validationMessage });
+    handleChangeStateEdit();
+    props.setName(e.target.value);
+    const message =
+      e.target.validationMessage === "Введите данные в указанном формате."
+        ? "Имя может содержать только латиницу, кириллицу, пробел или дефис"
+        : e.target.validationMessage;
+    setMessageError({ ...isMessageError, name: message });
   }
 
-  function checkValidity(e) {
-    const valid = e.target.form.checkValidity();
-    setIsValidForm(valid);
+  function handleChangeEmail(e) {
+    handleChangeStateEdit();
+    props.setEmail(e.target.value);
+    const message =
+      e.target.validationMessage === "Введите данные в указанном формате."
+        ? "email должен содержать локальная часть, символ '@', точка и доменное имя. "
+        : e.target.validationMessage;
+    setMessageError({ ...isMessageError, email: message });
   }
+
+  const resetForm = useCallback(
+    (newIsValid = false) => {
+      const state =
+        newIsValid.target.form.checkValidity() &&
+        (currentUser.name !== nameRef.current.value ||
+          currentUser.email !== emailRef.current.value);
+      setIsValidForm(state);
+    },
+    [setIsValidForm, currentUser]
+  );
 
   return (
     <section className="profile">
@@ -60,72 +54,84 @@ function FormEditProfile(props) {
         className="profile__form"
         name={props.name}
         onSubmit={props.onSubmit}
-        onChange={checkValidity}
+        onChange={resetForm}
         noValidate
       >
-        <h2 className="profile__title">Привет, {name}!</h2>
-        {/* сейчас name меняется при вводе данных, потом заменю на currentUser.name */}
+        <h2 className="profile__title">Привет, {currentUser.name}!</h2>
         <label className="profile__label">
           Имя
           <input
+            ref={nameRef}
             className="profile__item"
             type="name"
             placeholder="Имя"
             id="name"
             name="name"
             onChange={handleChangeName}
-            value={name}
-            disabled={stateForm === "read"}
+            value={props.userName}
+            disabled={props.stateForm === "read" || !props.answer}
+            pattern="^[А-яЁёA-z\-\s]+"
+            minLength="2"
+            maxLength="30"
             required
           ></input>
-          <span className="profile__error-message">{isMessageError.name}</span>
+          <span className="profile__error-message">{(props.stateForm === "edit")? isMessageError.name: ""}</span>
         </label>
         <label className="profile__label">
           E&#8209;mail
           <input
+            ref={emailRef}
             className="profile__item"
             type="email"
             placeholder="Email"
             id="email"
             name="email"
             onChange={handleChangeEmail}
-            value={email}
-            disabled={stateForm === "read"}
+            value={props.userEmail}
+            disabled={props.stateForm === "read" || !props.answer}
+            pattern="^[^ ]+@[^ ]+\.[a-z]{2,4}$"
             required
           ></input>
-          <span className="profile__error-message">{isMessageError.email}</span>
+          <span className="profile__error-message">{(props.stateForm === "edit")? isMessageError.email: ""}</span>
         </label>
-        {stateForm === "read" && (
-          <button className="profile__edit-button link" onClick={handleChangeStateEdit}>
+        {props.stateForm === "read" && (
+          <button
+            className="profile__edit-button link"
+            onClick={handleChangeStateEdit}
+          >
             Редактировать
           </button>
         )}
-        {stateForm === "read" && (
-          <Link to="/" className="profile__exit-button link" onClick={props.logOf}>
+        {props.stateForm === "read" && (
+          <Link
+            to="/"
+            className="profile__exit-button link"
+            onClick={props.logOf}
+          >
             Выйти из аккаунта
           </Link>
-        )} 
+        )}
         {/* не забыть функцию выхода */}
-        {stateForm === "edit" && (
+        {props.stateForm === "edit" && (
           <button
             className={
-              isValidForm
+              isValidForm && props.answer
                 ? "profile__submit-button button"
                 : "profile__submit-button button button_disabled"
             }
             type="submit"
-            onSubmit={handleSubmit}
+            onSubmit={props.onSubmit}
             disabled={!isValidForm}
           >
-            Сохранить
+            {props.answer ? "Сохранить" : "Сохранение..."}
           </button>
         )}
-        {stateForm === "error" && (
+        {props.stateForm === "error" && (
           <span className="error-message">
             При обновлении профиля произошла ошибка.
           </span>
         )}
-        {stateForm === "error" && (
+        {props.stateForm === "error" && (
           <button
             className="profile__submit-button profile__submit-button_error button button_disabled"
             type="submit"
